@@ -103,6 +103,7 @@ main{max-width:1240px;margin:auto;padding:24px 30px 50px}
 .slot-meta{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
 .slot-code{font-size:12px;font-weight:800;color:#b74227}
 .slot-name{font-size:13px;font-weight:700;color:#24211e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slot-name:empty{display:none}
 .slot-actions{display:flex;flex-direction:column;gap:5px;flex-shrink:0;align-items:flex-end}
 .btn-change{border:1px solid #c9c1b6;background:#fff;color:#514a43;border-radius:5px;padding:3px 7px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer;line-height:1.2;transition:all .15s}
 .btn-change:hover{border-color:#b74227;color:#b74227;background:#fff8f5}
@@ -913,7 +914,7 @@ function updateSlotUI(type) {
       name.textContent = currentLang === 'en' ? (item.name_en || 'Realistic') : item.name;
     } else {
       code.textContent = item.id ? ((type === 'style' || type === 'char-style' || type === 'scene-style') ? `#${item.id}` : item.id) : '';
-      name.textContent = currentLang === 'en' && item.name_en ? item.name_en : item.name;
+      name.textContent = '';
     }
   } else {
     slotEl.classList.remove('has-value');
