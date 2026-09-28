@@ -33,7 +33,6 @@ main{max-width:1240px;margin:auto;padding:24px 30px 50px}
 .step-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#b74227;color:#fff;font-size:13px;font-weight:800;line-height:1;flex-shrink:0;box-shadow:0 1px 3px rgba(183,66,39,0.25)}
 .step-title{margin:0;font-size:15px;font-weight:800;color:#24211e;display:inline-flex;align-items:center;gap:6px}
 .step-title.output-title{color:#b74227}
-.step-desc{font-size:12px;font-weight:500;color:#857b70}
 .step-toolbar{display:flex;align-items:center;gap:8px;margin-left:auto}
 .step-body{display:flex;flex-direction:column;gap:12px}
 
@@ -58,8 +57,8 @@ main{max-width:1240px;margin:auto;padding:24px 30px 50px}
 
 /* Aspect Ratio Selector */
 .ratio-form-group{display:flex;flex-direction:column;gap:8px}
-.ratio-label-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.ratio-hint{font-size:12px;font-weight:500;color:#786f65}
+.selector-options-row{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:12px;align-items:start}
+.selector-options-row>.form-label{padding-top:5px;white-space:nowrap}
 .ratio-presets-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .ratio-preset-btn{border:1px solid #dcd5ca;background:#faf8f5;color:#4a423a;padding:5px 12px;border-radius:18px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;line-height:1.3;transition:all .15s}
 .ratio-preset-btn:hover{border-color:#b74227;color:#b74227;background:#fff8f5}
@@ -187,7 +186,6 @@ dialog::backdrop{background:#000a}
           <div class="step-title-wrap">
             <span class="step-badge">1</span>
             <h2 class="step-title" data-i18n="step1Title">出图模式与留白</h2>
-            <span class="step-desc" data-i18n="step1Desc">（选择业务场景与画面留白等级）</span>
           </div>
         </div>
         <div class="step-body">
@@ -220,16 +218,11 @@ dialog::backdrop{background:#000a}
           <div class="step-title-wrap">
             <span class="step-badge">2</span>
             <h2 class="step-title" data-i18n="step2Title">画面主题与内容</h2>
-            <span class="step-desc" data-i18n="step2Desc">（输入画面主题、文章路径或提示词核心文案）</span>
           </div>
         </div>
         <div class="step-body">
           <div class="form-group">
-            <label for="input-theme" class="form-label">
-              <span id="theme-label-text" data-i18n="themeLabel">主题：</span>
-              <span class="req">*</span>
-            </label>
-            <textarea id="input-theme" class="text-input text-area" rows="2" placeholder="输入画面主题，例如：秋天的第一杯奶茶 / 窗台晒太阳的猫咪..."></textarea>
+            <textarea id="input-theme" class="text-input text-area" rows="2" placeholder="输入画面主题，例如：秋天的第一杯奶茶 / 窗台晒太阳的猫咪..." aria-label="画面主题或文章内容"></textarea>
           </div>
 
           <!-- Extra fields for poster mode only -->
@@ -252,25 +245,21 @@ dialog::backdrop{background:#000a}
           <div class="step-title-wrap">
             <span class="step-badge">3</span>
             <h2 class="step-title" data-i18n="step3Title">画幅比例与情绪</h2>
-            <span class="step-desc" data-i18n="step3Desc">（设定目标出图画幅与画面情感基调，可选）</span>
           </div>
         </div>
         <div class="step-body">
           <!-- Ratio Selector Form Group -->
           <div class="form-group ratio-form-group">
-            <div class="ratio-label-row">
-              <label for="input-ratio" class="form-label">
-                <span data-i18n="ratioLabel">画幅比例：</span>
-              </label>
-              <span class="ratio-hint" data-i18n="ratioHint">（默认不设，点击预设快捷填入，支持手动任意修改）</span>
-            </div>
-            <div class="ratio-presets-row" role="group" aria-label="画幅比例快捷预设">
-              <button type="button" class="ratio-preset-btn" data-ratio="3:4" data-i18n="presetXiaohongshu">小红书/公众号贴图 (3:4)</button>
-              <button type="button" class="ratio-preset-btn" data-ratio="2.35:1" data-i18n="presetWechatCover">公众号封面 (2.35:1)</button>
-              <button type="button" class="ratio-preset-btn" data-ratio="5:2" data-i18n="presetXCover">X文章封面 (5:2)</button>
-              <button type="button" class="ratio-preset-btn" data-ratio="4:3" data-i18n="presetArticleIllust">文章插图 (4:3)</button>
-              <button type="button" class="ratio-preset-btn" data-ratio="1:1" data-i18n="presetSquare">方块 (1:1)</button>
-              <button type="button" class="ratio-preset-btn" data-ratio="9:16" data-i18n="presetVerticalStory">手机全屏 (9:16)</button>
+            <div class="selector-options-row">
+              <label for="input-ratio" class="form-label" data-i18n="ratioLabel">画幅比例：</label>
+              <div class="ratio-presets-row" role="group" aria-label="画幅比例快捷预设">
+                <button type="button" class="ratio-preset-btn" data-ratio="3:4" data-i18n="presetXiaohongshu">小红书/公众号贴图 (3:4)</button>
+                <button type="button" class="ratio-preset-btn" data-ratio="2.35:1" data-i18n="presetWechatCover">公众号封面 (2.35:1)</button>
+                <button type="button" class="ratio-preset-btn" data-ratio="5:2" data-i18n="presetXCover">X文章封面 (5:2)</button>
+                <button type="button" class="ratio-preset-btn" data-ratio="4:3" data-i18n="presetArticleIllust">文章插图 (4:3)</button>
+                <button type="button" class="ratio-preset-btn" data-ratio="1:1" data-i18n="presetSquare">方块 (1:1)</button>
+                <button type="button" class="ratio-preset-btn" data-ratio="9:16" data-i18n="presetVerticalStory">手机全屏 (9:16)</button>
+              </div>
             </div>
             <div class="ratio-input-wrap">
               <input type="text" id="input-ratio" class="text-input ratio-input" placeholder="输入或点击上方预设，例如：3:4、5:2、1:1（可手填）">
@@ -280,28 +269,25 @@ dialog::backdrop{background:#000a}
 
           <!-- Mood Selector Form Group -->
           <div class="form-group mood-form-group">
-            <div class="ratio-label-row">
-              <label for="input-mood" class="form-label">
-                <span data-i18n="moodLabel">情绪：</span>
-              </label>
-              <span class="ratio-hint" data-i18n="moodHint">（可选，点击标签多选，支持手动输入）</span>
-            </div>
-            <div class="mood-presets-row" role="group" aria-label="情绪快捷预设">
-              <button type="button" class="mood-preset-btn" data-mood-zh="治愈" data-mood-en="Healing" data-i18n="moodHealing">治愈</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="童趣" data-mood-en="Childlike" data-i18n="moodChildlike">童趣</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="松弛" data-mood-en="Relaxed" data-i18n="moodRelaxed">松弛</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="幽默" data-mood-en="Humorous" data-i18n="moodHumorous">幽默</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="诗意" data-mood-en="Poetic" data-i18n="moodPoetic">诗意</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="浪漫" data-mood-en="Romantic" data-i18n="moodRomantic">浪漫</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="活力" data-mood-en="Vibrant" data-i18n="moodVibrant">活力</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="微丧" data-mood-en="Melancholy" data-i18n="moodMelancholy">微丧</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="孤寂" data-mood-en="Solitary" data-i18n="moodSolitary">孤寂</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="紧张" data-mood-en="Tense" data-i18n="moodTense">紧张</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="庄严" data-mood-en="Solemn" data-i18n="moodSolemn">庄严</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="荒诞" data-mood-en="Absurd" data-i18n="moodAbsurd">荒诞</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="恐怖" data-mood-en="Eerie" data-i18n="moodEerie">恐怖</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="神秘" data-mood-en="Mysterious" data-i18n="moodMysterious">神秘</button>
-              <button type="button" class="mood-preset-btn" data-mood-zh="激烈" data-mood-en="Intense" data-i18n="moodIntense">激烈</button>
+            <div class="selector-options-row">
+              <label for="input-mood" class="form-label" data-i18n="moodLabel">情绪：</label>
+              <div class="mood-presets-row" role="group" aria-label="情绪快捷预设">
+                <button type="button" class="mood-preset-btn" data-mood-zh="治愈" data-mood-en="Healing" data-i18n="moodHealing">治愈</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="童趣" data-mood-en="Childlike" data-i18n="moodChildlike">童趣</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="松弛" data-mood-en="Relaxed" data-i18n="moodRelaxed">松弛</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="幽默" data-mood-en="Humorous" data-i18n="moodHumorous">幽默</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="诗意" data-mood-en="Poetic" data-i18n="moodPoetic">诗意</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="浪漫" data-mood-en="Romantic" data-i18n="moodRomantic">浪漫</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="活力" data-mood-en="Vibrant" data-i18n="moodVibrant">活力</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="微丧" data-mood-en="Melancholy" data-i18n="moodMelancholy">微丧</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="孤寂" data-mood-en="Solitary" data-i18n="moodSolitary">孤寂</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="紧张" data-mood-en="Tense" data-i18n="moodTense">紧张</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="庄严" data-mood-en="Solemn" data-i18n="moodSolemn">庄严</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="荒诞" data-mood-en="Absurd" data-i18n="moodAbsurd">荒诞</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="恐怖" data-mood-en="Eerie" data-i18n="moodEerie">恐怖</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="神秘" data-mood-en="Mysterious" data-i18n="moodMysterious">神秘</button>
+                <button type="button" class="mood-preset-btn" data-mood-zh="激烈" data-mood-en="Intense" data-i18n="moodIntense">激烈</button>
+              </div>
             </div>
             <div class="ratio-input-wrap">
               <input type="text" id="input-mood" class="text-input ratio-input" placeholder="输入或点选上方情绪（可多选，例如：治愈、松弛）">
@@ -317,7 +303,6 @@ dialog::backdrop{background:#000a}
           <div class="step-title-wrap">
             <span class="step-badge">4</span>
             <h2 class="step-title" data-i18n="step4Title">图型 · 风格 · 色彩搭配</h2>
-            <span class="step-desc" data-i18n="step4Desc">（从画廊中点选视觉组件，未选部分由模型自由发挥）</span>
           </div>
           <div class="step-toolbar">
             <button type="button" id="btn-gacha" class="btn-tool" title="随机抽选图型、风格与色彩">
@@ -410,7 +395,6 @@ dialog::backdrop{background:#000a}
           <div class="step-title-wrap">
             <span class="step-badge">5</span>
             <h2 class="step-title output-title" data-i18n="step5Title">拼装生成的出图指令</h2>
-            <span class="step-desc" data-i18n="step5Desc">（参数已实时合成，复制即可前往生图工具出图）</span>
           </div>
           <div class="output-actions">
             <button type="button" id="btn-copy-assembled" class="copy-main-btn">
@@ -483,15 +467,10 @@ const I18N = {
     assemblerTitle: "🛠️ 提示词拼装器",
     assemblerSub: "交互式点选图型、风格与色彩，实时拼装出图指令。",
     step1Title: "出图模式与留白",
-    step1Desc: "（选择业务场景与画面留白等级）",
     step2Title: "画面主题与内容",
-    step2Desc: "（输入画面主题、文章路径或提示词核心文案）",
     step3Title: "画幅比例与情绪",
-    step3Desc: "（设定目标出图画幅与画面情感基调，可选）",
     step4Title: "图型 · 风格 · 色彩搭配",
-    step4Desc: "（从画廊中点选视觉组件，未选部分由模型自由发挥）",
     step5Title: "拼装生成的出图指令",
-    step5Desc: "（参数已实时合成，复制即可前往生图工具出图）",
     modeLabel: "出图模式：",
     modePure: "纯图",
     modeGraphicText: "图文",
@@ -516,7 +495,6 @@ const I18N = {
     audiencePlaceholder: "例如：年轻都市白领 / 露营爱好者 / 亲子家庭...",
     channelPlaceholder: "例如：小红书 / 微信公众号封面 / 线下门店立牌...",
     ratioLabel: "画幅比例：",
-    ratioHint: "（默认不设，点击预设快捷填入，支持手动任意修改）",
     ratioPlaceholder: "输入或点击上方预设，例如：3:4、5:2、1:1（可手填）",
     presetXiaohongshu: "小红书/公众号贴图 (3:4)",
     presetWechatCover: "公众号封面 (2.35:1)",
@@ -525,7 +503,6 @@ const I18N = {
     presetSquare: "方块 (1:1)",
     presetVerticalStory: "手机全屏 (9:16)",
     moodLabel: "情绪：",
-    moodHint: "（可选，点击标签多选，支持手动输入）",
     moodPlaceholder: "输入或点选上方情绪（可多选，例如：治愈、松弛）",
     moodHealing: "治愈",
     moodRelaxed: "松弛",
@@ -597,15 +574,10 @@ const I18N = {
     assemblerTitle: "🛠️ Prompt Assembler",
     assemblerSub: "Visually select layout, style, and color to assemble prompt commands in real time.",
     step1Title: "Mode & Negative Space",
-    step1Desc: "(Select generation mode and negative space level)",
     step2Title: "Theme & Content",
-    step2Desc: "(Enter subject description, article file path, or summary text)",
     step3Title: "Aspect Ratio & Mood",
-    step3Desc: "(Set target aspect ratio and emotional tone, optional)",
     step4Title: "Visual Assets: Layout, Style & Color",
-    step4Desc: "(Pick visual components from the gallery, or let model decide)",
     step5Title: "Generated Prompt Command",
-    step5Desc: "(Parameters assembled in real time, copy and paste to generate)",
     modeLabel: "Mode:",
     modePure: "Image Only",
     modeGraphicText: "Graphic-Text",
@@ -630,7 +602,6 @@ const I18N = {
     audiencePlaceholder: "e.g. Young urban professionals / Campers / Families...",
     channelPlaceholder: "e.g. Instagram / RED / Store poster stand...",
     ratioLabel: "Aspect Ratio:",
-    ratioHint: "(Default unset; click preset or type custom ratio)",
     ratioPlaceholder: "Enter or click preset, e.g. 3:4, 5:2, 1:1 (customizable)",
     presetXiaohongshu: "RED / WeChat Sticker (3:4)",
     presetWechatCover: "WeChat Official Cover (2.35:1)",
@@ -639,7 +610,6 @@ const I18N = {
     presetSquare: "Square (1:1)",
     presetVerticalStory: "Full Screen (9:16)",
     moodLabel: "Mood:",
-    moodHint: "(Optional, multi-select presets or type custom)",
     moodPlaceholder: "Type or pick moods (e.g. Healing, Relaxed)",
     moodHealing: "Healing",
     moodRelaxed: "Relaxed",
