@@ -476,6 +476,7 @@ def main() -> None:
         SKILL / "SKILL.md",
         ROOT / "skills" / "article-illustration-planner" / "SKILL.md",
         ROOT / "skills" / "poster-prompt-generator" / "SKILL.md",
+        ROOT / "skills" / "article-cover-designer" / "SKILL.md",
     ]:
         if sf.exists():
             content = sf.read_text(encoding="utf-8")
