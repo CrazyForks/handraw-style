@@ -76,7 +76,16 @@ main{max-width:1240px;margin:auto;padding:24px 30px 50px}
 .mood-preset-btn.is-active{background:#b74227;color:#fff;border-color:#b74227;box-shadow:0 1px 3px rgba(183,66,39,0.25)}
 
 /* Slots Grid */
+.fusion-checkbox-wrap{display:inline-flex;align-items:center;gap:6px;margin-left:12px;padding:3px 10px;border-radius:16px;background:#eee8df;border:1px solid #dcd5ca;cursor:pointer;font-size:12.5px;font-weight:750;color:#514a43;user-select:none;transition:all .15s}
+.fusion-checkbox-wrap:hover{background:#ede6dc;border-color:#b74227;color:#b74227}
+.fusion-checkbox-wrap.is-active{background:#b74227;color:#fff;border-color:#b74227;box-shadow:0 1px 4px rgba(183,66,39,0.25)}
+.fusion-checkbox{accent-color:#b74227;cursor:pointer;margin:0}
 .slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:0}
+.slots-grid.is-fusion{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1100px){.slots-grid.is-fusion{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.slots-grid.is-fusion{grid-template-columns:1fr}}
+.picker-card.is-realistic .picker-card-name{font-weight:750}
+.slot-card[hidden]{display:none!important}
 .slot-card{border:1px solid #ded8cf;border-radius:12px;background:#fff;padding:12px 14px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,box-shadow .15s,opacity .15s}
 .slot-card.has-value{background:#fff;border-color:#b74227;box-shadow:0 2px 8px rgba(183,66,39,0.08)}
 .slot-card.is-disabled{opacity:0.48;background:#f3efe8;border-color:#ded8cf;cursor:not-allowed}
@@ -303,6 +312,10 @@ dialog::backdrop{background:#000a}
           <div class="step-title-wrap">
             <span class="step-badge">4</span>
             <h2 class="step-title" data-i18n="step4Title">图型 · 风格 · 色彩搭配</h2>
+            <label class="fusion-checkbox-wrap" id="fusion-checkbox-wrap">
+              <input type="checkbox" id="checkbox-fusion" class="fusion-checkbox">
+              <span class="fusion-checkbox-text" data-i18n="fusionCheckboxLabel">风格融合</span>
+            </label>
           </div>
           <div class="step-toolbar">
             <button type="button" id="btn-gacha" class="btn-tool" title="随机抽选图型、风格与色彩">
@@ -316,7 +329,7 @@ dialog::backdrop{background:#000a}
           </div>
         </div>
         <div class="step-body">
-          <div class="slots-grid">
+          <div class="slots-grid" id="slots-grid">
             <!-- Layout Slot -->
             <div class="slot-card" id="slot-layout">
               <div class="slot-header">
@@ -340,7 +353,7 @@ dialog::backdrop{background:#000a}
               </div>
             </div>
 
-            <!-- Style Slot -->
+            <!-- Single Style Slot (Default) -->
             <div class="slot-card" id="slot-style">
               <div class="slot-header">
                 <span class="slot-title">🎨 <span data-i18n="slotStyle">风格</span></span>
@@ -359,6 +372,52 @@ dialog::backdrop{background:#000a}
                 <div class="slot-actions">
                   <button type="button" class="btn-change" data-picker="style" data-i18n="changeBtn">更换</button>
                   <button type="button" class="btn-clear" data-clear="style" title="清除选择" aria-label="清除选择">×</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fusion Character Style Slot (Hidden when not fusion) -->
+            <div class="slot-card" id="slot-char-style" hidden>
+              <div class="slot-header">
+                <span class="slot-title">🎭 <span data-i18n="slotCharStyle">角色风格</span></span>
+                <span class="slot-optional" data-i18n="optionalCharStyle">可选 (风格/写实)</span>
+              </div>
+              <button type="button" class="slot-trigger" data-picker="char-style">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 10 10 0 0 1 0-18z"/></svg>
+                <span data-i18n="pickCharStyleText">按图选择角色风格</span>
+              </button>
+              <div class="slot-filled" hidden>
+                <div class="slot-img-wrap"><img src="" alt=""></div>
+                <div class="slot-meta">
+                  <span class="slot-code"></span>
+                  <span class="slot-name"></span>
+                </div>
+                <div class="slot-actions">
+                  <button type="button" class="btn-change" data-picker="char-style" data-i18n="changeBtn">更换</button>
+                  <button type="button" class="btn-clear" data-clear="char-style" title="清除选择" aria-label="清除选择">×</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fusion Scene Style Slot (Hidden when not fusion) -->
+            <div class="slot-card" id="slot-scene-style" hidden>
+              <div class="slot-header">
+                <span class="slot-title">🌄 <span data-i18n="slotSceneStyle">场景风格</span></span>
+                <span class="slot-optional" data-i18n="optionalSceneStyle">可选 (风格/写实)</span>
+              </div>
+              <button type="button" class="slot-trigger" data-picker="scene-style">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span data-i18n="pickSceneStyleText">按图选择场景风格</span>
+              </button>
+              <div class="slot-filled" hidden>
+                <div class="slot-img-wrap"><img src="" alt=""></div>
+                <div class="slot-meta">
+                  <span class="slot-code"></span>
+                  <span class="slot-name"></span>
+                </div>
+                <div class="slot-actions">
+                  <button type="button" class="btn-change" data-picker="scene-style" data-i18n="changeBtn">更换</button>
+                  <button type="button" class="btn-clear" data-clear="scene-style" title="清除选择" aria-label="清除选择">×</button>
                 </div>
               </div>
             </div>
@@ -447,14 +506,29 @@ const inputRatio=document.querySelector('#input-ratio'),btnClearRatio=document.q
 const inputMood=document.querySelector('#input-mood'),btnClearMood=document.querySelector('#btn-clear-mood');
 const assembledText=document.querySelector('#assembled-text'),btnCopyAssembled=document.querySelector('#btn-copy-assembled'),copyBtnText=document.querySelector('#copy-btn-text');
 const pickerDialog=document.querySelector('#picker-dialog'),pickerTitle=document.querySelector('#picker-title'),pickerFilters=document.querySelector('#picker-filters'),pickerSearch=document.querySelector('#picker-search'),pickerGrid=document.querySelector('#picker-grid');
+const checkboxFusion=document.querySelector('#checkbox-fusion'),fusionWrap=document.querySelector('#fusion-checkbox-wrap');
+const slotsGrid=document.querySelector('#slots-grid'),slotStyle=document.querySelector('#slot-style'),slotCharStyle=document.querySelector('#slot-char-style'),slotSceneStyle=document.querySelector('#slot-scene-style');
 
 let currentMode = 'pure'; // 'pure' | 'graphic-text' | 'poster' | 'article-illust'
 let currentWhitespace = 'normal'; // 'normal' | 'moderate' | 'high'
 let selectedLayout = null;
 let selectedStyle = null;
+let selectedCharStyle = null;
+let selectedSceneStyle = null;
 let selectedColor = null;
 let currentPickerType = null;
 let currentPickerFilter = 'all';
+let isFusionActive = false;
+
+const REALISTIC_ITEM = {
+  id: 'realistic',
+  isRealistic: true,
+  group: 'all',
+  name: '写实',
+  name_en: 'Realistic',
+  ref: '写实摄影 / 真实电影质感摄影',
+  img: '../../../images/realistic.webp'
+};
 
 const I18N = {
   zh: {
@@ -466,6 +540,7 @@ const I18N = {
     wechatBtn: "💬 创作变现交流群",
     assemblerTitle: "🛠️ 提示词拼装器",
     assemblerSub: "交互式点选图型、风格与色彩，实时拼装出图指令。",
+    fusionCheckboxLabel: "风格融合",
     step1Title: "出图模式与留白",
     step2Title: "画面主题与内容",
     step3Title: "画幅比例与情绪",
@@ -521,14 +596,20 @@ const I18N = {
     moodIntense: "激烈",
     slotLayout: "图型",
     slotStyle: "风格",
+    slotCharStyle: "角色风格",
+    slotSceneStyle: "场景风格",
     slotColor: "主题色",
     optional: "可选",
     optionalLayout: "可选 (120)",
     optionalStyle: "可选 (279)",
+    optionalCharStyle: "可选 (风格/写实)",
+    optionalSceneStyle: "可选 (风格/写实)",
     optionalColor: "可选 (36)",
     layoutNotApplicable: "不适用",
     pickLayoutText: "按图选择图型 (120)",
     pickStyleText: "按图选择风格 (279)",
+    pickCharStyleText: "按图选择角色风格",
+    pickSceneStyleText: "按图选择场景风格",
     pickColorText: "按图选择主题色 (36)",
     changeBtn: "更换",
     gachaBtn: "智能随机抽卡",
@@ -541,6 +622,9 @@ const I18N = {
     searchPlaceholder: "输入编号或名称过滤...",
     pickerTitleLayout: "选择图型 (120)",
     pickerTitleStyle: "选择手绘风格 (279)",
+    pickerTitleCharStyle: "选择角色风格",
+    pickerTitleSceneStyle: "选择场景风格",
+    styleConflictAlert: "角色风格与场景风格必须不同，请选择不同的风格！",
     pickerTitleColor: "选择主题色 (36)",
     filterAll: "全部",
     filterSocialCard: "社媒卡 (SC)",
@@ -573,6 +657,7 @@ const I18N = {
     wechatBtn: "💬 Creator Community",
     assemblerTitle: "🛠️ Prompt Assembler",
     assemblerSub: "Visually select layout, style, and color to assemble prompt commands in real time.",
+    fusionCheckboxLabel: "Style Fusion",
     step1Title: "Mode & Negative Space",
     step2Title: "Theme & Content",
     step3Title: "Aspect Ratio & Mood",
@@ -628,14 +713,20 @@ const I18N = {
     moodIntense: "Intense",
     slotLayout: "Layout",
     slotStyle: "Style",
+    slotCharStyle: "Character Style",
+    slotSceneStyle: "Scene Style",
     slotColor: "Theme Color",
     optional: "Optional",
     optionalLayout: "Optional (120)",
     optionalStyle: "Optional (279)",
+    optionalCharStyle: "Optional (Style/Realistic)",
+    optionalSceneStyle: "Optional (Style/Realistic)",
     optionalColor: "Optional (36)",
     layoutNotApplicable: "N/A",
     pickLayoutText: "Pick Layout (120)",
     pickStyleText: "Pick Style (279)",
+    pickCharStyleText: "Pick Character Style",
+    pickSceneStyleText: "Pick Scene Style",
     pickColorText: "Pick Theme Color (36)",
     changeBtn: "Change",
     gachaBtn: "Random Gacha",
@@ -648,6 +739,9 @@ const I18N = {
     searchPlaceholder: "Search ID or name...",
     pickerTitleLayout: "Select Layout (120)",
     pickerTitleStyle: "Select Style (279)",
+    pickerTitleCharStyle: "Select Character Style",
+    pickerTitleSceneStyle: "Select Scene Style",
+    styleConflictAlert: "Character style and scene style must be different!",
     pickerTitleColor: "Select Theme Color (36)",
     filterAll: "All",
     filterSocialCard: "Social Cards (SC)",
@@ -678,17 +772,31 @@ let currentLang = localStorage.getItem('handdraw_lang') || ((navigator.language 
 function updatePrompt() {
   const isZh = currentLang === 'zh';
   const t = I18N[currentLang];
+
   const parts = [];
 
-  // Prefix based on mode
-  if (currentMode === 'poster') {
-    parts.push(isZh ? '请帮我出海报提示词' : 'Please generate a poster prompt for me');
-  } else if (currentMode === 'graphic-text') {
-    parts.push(isZh ? '图文模式' : 'Graphic-text mode');
-  } else if (currentMode === 'article-illust') {
-    parts.push(isZh ? '文章插图模式' : 'Article illustration mode');
-  } else if (currentMode === 'article-cover') {
-    parts.push(isZh ? '请设计文章封面' : 'Please design an article cover');
+  // Prefix based on mode / fusion
+  if (isFusionActive) {
+    parts.push(isZh ? '【风格融合设计】' : '[Style Fusion Design]');
+    if (currentMode === 'poster') {
+      parts.push(isZh ? '海报模式' : 'Poster mode');
+    } else if (currentMode === 'graphic-text') {
+      parts.push(isZh ? '图文模式' : 'Graphic-text mode');
+    } else if (currentMode === 'article-illust') {
+      parts.push(isZh ? '文章插图模式' : 'Article illustration mode');
+    } else if (currentMode === 'article-cover') {
+      parts.push(isZh ? '文章封面模式' : 'Article cover mode');
+    }
+  } else {
+    if (currentMode === 'poster') {
+      parts.push(isZh ? '请帮我出海报提示词' : 'Please generate a poster prompt for me');
+    } else if (currentMode === 'graphic-text') {
+      parts.push(isZh ? '图文模式' : 'Graphic-text mode');
+    } else if (currentMode === 'article-illust') {
+      parts.push(isZh ? '文章插图模式' : 'Article illustration mode');
+    } else if (currentMode === 'article-cover') {
+      parts.push(isZh ? '请设计文章封面' : 'Please design an article cover');
+    }
   }
 
   // Layout
@@ -696,9 +804,20 @@ function updatePrompt() {
     parts.push(isZh ? `图型：${selectedLayout.id}` : `Layout: ${selectedLayout.id}`);
   }
 
-  // Style
-  if (selectedStyle) {
-    parts.push(isZh ? `风格：${selectedStyle.id}` : `Style: ${selectedStyle.id}`);
+  // Style(s)
+  if (isFusionActive) {
+    if (selectedCharStyle) {
+      const charName = selectedCharStyle.isRealistic ? (isZh ? '写实' : 'Realistic') : selectedCharStyle.id;
+      parts.push(isZh ? `角色风格：${charName}` : `Character style: ${charName}`);
+    }
+    if (selectedSceneStyle) {
+      const sceneName = selectedSceneStyle.isRealistic ? (isZh ? '写实' : 'Realistic') : selectedSceneStyle.id;
+      parts.push(isZh ? `场景风格：${sceneName}` : `Scene style: ${sceneName}`);
+    }
+  } else {
+    if (selectedStyle) {
+      parts.push(isZh ? `风格：${selectedStyle.id}` : `Style: ${selectedStyle.id}`);
+    }
   }
 
   // Theme color
@@ -726,7 +845,9 @@ function updatePrompt() {
   }
 
   // Fallback: if style OR color is missing, inject "其他你帮我选择"
-  const missingStyleOrColor = !selectedStyle || !selectedColor;
+  const missingStyleOrColor = isFusionActive
+    ? (!selectedCharStyle || !selectedSceneStyle || !selectedColor)
+    : (!selectedStyle || !selectedColor);
   if (missingStyleOrColor) {
     parts.push(t.fallbackPrompt);
   }
@@ -777,6 +898,8 @@ function updateSlotUI(type) {
   let item = null;
   if (type === 'layout') item = selectedLayout;
   if (type === 'style') item = selectedStyle;
+  if (type === 'char-style') item = selectedCharStyle;
+  if (type === 'scene-style') item = selectedSceneStyle;
   if (type === 'color') item = selectedColor;
 
   if (item) {
@@ -785,8 +908,13 @@ function updateSlotUI(type) {
     filled.hidden = false;
     img.src = item.img;
     img.alt = item.name;
-    code.textContent = item.id ? (type === 'style' ? `#${item.id}` : item.id) : '';
-    name.textContent = currentLang === 'en' && item.name_en ? item.name_en : item.name;
+    if (item.isRealistic) {
+      code.textContent = '';
+      name.textContent = currentLang === 'en' ? (item.name_en || 'Realistic') : item.name;
+    } else {
+      code.textContent = item.id ? ((type === 'style' || type === 'char-style' || type === 'scene-style') ? `#${item.id}` : item.id) : '';
+      name.textContent = currentLang === 'en' && item.name_en ? item.name_en : item.name;
+    }
   } else {
     slotEl.classList.remove('has-value');
     trigger.hidden = false;
@@ -878,8 +1006,8 @@ function openPicker(type) {
   if (type === 'layout') {
     pickerTitle.textContent = I18N[currentLang].pickerTitleLayout;
     renderLayoutFilters();
-  } else if (type === 'style') {
-    pickerTitle.textContent = I18N[currentLang].pickerTitleStyle;
+  } else if (type === 'style' || type === 'char-style' || type === 'scene-style') {
+    pickerTitle.textContent = type === 'char-style' ? (I18N[currentLang].pickerTitleCharStyle || '选择角色风格') : (type === 'scene-style' ? (I18N[currentLang].pickerTitleSceneStyle || '选择场景风格') : I18N[currentLang].pickerTitleStyle);
     renderStyleFilters();
   } else if (type === 'color') {
     pickerTitle.textContent = I18N[currentLang].pickerTitleColor;
@@ -943,19 +1071,24 @@ function renderPickerItems() {
   if (currentPickerType === 'layout') {
     list = LAYOUTS_DATA;
     selectedId = selectedLayout ? selectedLayout.id : null;
-  } else if (currentPickerType === 'style') {
-    list = STYLES_DATA;
-    selectedId = selectedStyle ? selectedStyle.id : null;
+  } else if (currentPickerType === 'style' || currentPickerType === 'char-style' || currentPickerType === 'scene-style') {
+    const realisticMatch = !query || '写实'.includes(query) || 'realistic'.includes(query) || '摄影'.includes(query) || 'photo'.includes(query);
+    const filterAllows = currentPickerFilter === 'all';
+    list = (realisticMatch && filterAllows) ? [REALISTIC_ITEM, ...STYLES_DATA] : STYLES_DATA;
+    if (currentPickerType === 'style') selectedId = selectedStyle ? selectedStyle.id : null;
+    else if (currentPickerType === 'char-style') selectedId = selectedCharStyle ? selectedCharStyle.id : null;
+    else if (currentPickerType === 'scene-style') selectedId = selectedSceneStyle ? selectedSceneStyle.id : null;
   } else if (currentPickerType === 'color') {
     list = COLORS_DATA;
     selectedId = selectedColor ? selectedColor.id : null;
   }
 
   const filtered = list.filter(item => {
+    if (item.isRealistic) return true;
     // Category match
     if (currentPickerType === 'layout') {
       if (currentPickerFilter !== 'all' && item.cat !== currentPickerFilter) return false;
-    } else if (currentPickerType === 'style') {
+    } else if (currentPickerType === 'style' || currentPickerType === 'char-style' || currentPickerType === 'scene-style') {
       if (currentPickerFilter !== 'all' && item.group !== currentPickerFilter) return false;
     } else if (currentPickerType === 'color') {
       if (currentPickerFilter !== 'all' && item.cat !== currentPickerFilter) return false;
@@ -974,12 +1107,14 @@ function renderPickerItems() {
   pickerGrid.innerHTML = filtered.map(item => {
     const isSel = selectedId === item.id;
     const displayName = currentLang === 'en' && item.name_en ? item.name_en : item.name;
-    const badge = currentPickerType === 'style' ? `#${item.id}` : item.id;
+    const badge = item.isRealistic ? '' : ((currentPickerType === 'style' || currentPickerType === 'char-style' || currentPickerType === 'scene-style') ? `#${item.id}` : item.id);
+    const badgeHtml = badge ? `<span class="picker-card-id">${badge}</span>` : '';
+    const extraCls = item.isRealistic ? ' is-realistic' : '';
     return `
-      <button type="button" class="picker-card${isSel ? ' is-selected' : ''}" data-id="${item.id}">
+      <button type="button" class="picker-card${isSel ? ' is-selected' : ''}${extraCls}" data-id="${item.id}">
         <img class="picker-card-img" src="${item.img}" alt="${displayName}">
         <div class="picker-card-info">
-          <span class="picker-card-id">${badge}</span>
+          ${badgeHtml}
           <span class="picker-card-name" title="${displayName}">${displayName}</span>
         </div>
       </button>
@@ -991,8 +1126,22 @@ function renderPickerItems() {
       const id = card.dataset.id;
       const found = list.find(x => x.id === id);
       if (currentPickerType === 'layout') selectedLayout = found;
-      if (currentPickerType === 'style') selectedStyle = found;
       if (currentPickerType === 'color') selectedColor = found;
+      if (currentPickerType === 'style') selectedStyle = found;
+      if (currentPickerType === 'char-style') {
+        if (selectedSceneStyle && selectedSceneStyle.id === found.id) {
+          alert(I18N[currentLang].styleConflictAlert || (currentLang === 'zh' ? '角色风格与场景风格必须不同，请选择不同的风格！' : 'Character style and scene style must be different!'));
+          return;
+        }
+        selectedCharStyle = found;
+      }
+      if (currentPickerType === 'scene-style') {
+        if (selectedCharStyle && selectedCharStyle.id === found.id) {
+          alert(I18N[currentLang].styleConflictAlert || (currentLang === 'zh' ? '角色风格与场景风格必须不同，请选择不同的风格！' : 'Character style and scene style must be different!'));
+          return;
+        }
+        selectedSceneStyle = found;
+      }
       updateSlotUI(currentPickerType);
       updatePrompt();
       pickerDialog.close();
@@ -1018,6 +1167,8 @@ document.addEventListener('click', e => {
     if (type === 'layout' && (currentMode === 'article-illust' || currentMode === 'article-cover')) return;
     if (type === 'layout') selectedLayout = null;
     if (type === 'style') selectedStyle = null;
+    if (type === 'char-style') selectedCharStyle = null;
+    if (type === 'scene-style') selectedSceneStyle = null;
     if (type === 'color') selectedColor = null;
     updateSlotUI(type);
     updatePrompt();
@@ -1150,6 +1301,26 @@ if (btnClearMood) {
   });
 }
 
+// Fusion Checkbox Listener
+if (checkboxFusion) {
+  checkboxFusion.addEventListener('change', () => {
+    isFusionActive = checkboxFusion.checked;
+    if (fusionWrap) fusionWrap.classList.toggle('is-active', isFusionActive);
+    if (slotsGrid) slotsGrid.classList.toggle('is-fusion', isFusionActive);
+    if (slotStyle) slotStyle.hidden = isFusionActive;
+    if (slotCharStyle) slotCharStyle.hidden = !isFusionActive;
+    if (slotSceneStyle) slotSceneStyle.hidden = !isFusionActive;
+
+    if (isFusionActive) {
+      if (selectedStyle && !selectedCharStyle) {
+        selectedCharStyle = selectedStyle;
+        updateSlotUI('char-style');
+      }
+    }
+    updatePrompt();
+  });
+}
+
 // Toolbar Actions: Gacha & Reset
 document.querySelector('#btn-gacha').addEventListener('click', () => {
   // Random layout (skip in article-illust and article-cover mode)
@@ -1158,10 +1329,24 @@ document.querySelector('#btn-gacha').addEventListener('click', () => {
   } else {
     selectedLayout = null;
   }
-  // Random style
-  selectedStyle = STYLES_DATA[Math.floor(Math.random() * STYLES_DATA.length)];
   // Random color
   selectedColor = COLORS_DATA[Math.floor(Math.random() * COLORS_DATA.length)];
+
+  if (isFusionActive) {
+    const pool = [REALISTIC_ITEM, ...STYLES_DATA];
+    selectedCharStyle = pool[Math.floor(Math.random() * pool.length)];
+    const remain = pool.filter(x => x.id !== selectedCharStyle.id);
+    selectedSceneStyle = remain[Math.floor(Math.random() * remain.length)];
+    updateSlotUI('layout');
+    updateSlotUI('char-style');
+    updateSlotUI('scene-style');
+    updateSlotUI('color');
+    updatePrompt();
+    return;
+  }
+
+  // Random style
+  selectedStyle = STYLES_DATA[Math.floor(Math.random() * STYLES_DATA.length)];
 
   updateSlotUI('layout');
   updateSlotUI('style');
@@ -1172,6 +1357,8 @@ document.querySelector('#btn-gacha').addEventListener('click', () => {
 document.querySelector('#btn-reset').addEventListener('click', () => {
   selectedLayout = null;
   selectedStyle = null;
+  selectedCharStyle = null;
+  selectedSceneStyle = null;
   selectedColor = null;
   inputTheme.value = '';
   inputTheme.style.height = '';
@@ -1189,6 +1376,8 @@ document.querySelector('#btn-reset').addEventListener('click', () => {
   }
   updateSlotUI('layout');
   updateSlotUI('style');
+  updateSlotUI('char-style');
+  updateSlotUI('scene-style');
   updateSlotUI('color');
   setWhitespace('normal');
   setMode('pure');
@@ -1275,14 +1464,16 @@ function applyLang(lang) {
   if (langBtn) langBtn.textContent = t.langBtn;
   updateSlotUI('layout');
   updateSlotUI('style');
+  updateSlotUI('char-style');
+  updateSlotUI('scene-style');
   updateSlotUI('color');
   updatePrompt();
   if (pickerDialog.open) {
     if (currentPickerType === 'layout') {
       pickerTitle.textContent = t.pickerTitleLayout;
       renderLayoutFilters();
-    } else if (currentPickerType === 'style') {
-      pickerTitle.textContent = t.pickerTitleStyle;
+    } else if (currentPickerType === 'style' || currentPickerType === 'char-style' || currentPickerType === 'scene-style') {
+      pickerTitle.textContent = currentPickerType === 'char-style' ? t.pickerTitleCharStyle : (currentPickerType === 'scene-style' ? t.pickerTitleSceneStyle : t.pickerTitleStyle);
       renderStyleFilters();
     } else if (currentPickerType === 'color') {
       pickerTitle.textContent = t.pickerTitleColor;

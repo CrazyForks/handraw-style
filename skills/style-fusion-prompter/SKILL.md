@@ -26,37 +26,58 @@ description: 跨媒介“角色视觉语言 × 场景视觉语言”双风格共
    - 画面必须围绕【主题】形成清晰的叙事时刻，优先保障“谁、在哪里、正在做什么”一目了然；
    - 若存在跑、跳、拉、推、攀爬等动作，重心的支撑与发力方向必须符合物理常识，动作逻辑优于单纯夸张。
 
+4. **主题与风格保真原则（按输入类型精准分流）**：
+   - **主题保真**：用户输入的主题是画面的核心灵魂，必须严格保持克制与忠实，**严禁随意扩写复杂的剧情动作、人物外貌、长篇情节或背景故事**。若用户提供简短主题（如“末世异能者”），字段严格使用“末世异能者”或用户原意短语；
+   - **风格名称输入（按用户的来，严禁扩写）**：如果用户写的是**风格名称**（如“写实”、“写实风格”、“电影感实拍摄影”、“水墨工笔”、“复古美漫”等任意名称），**完全按照用户的来原样输出**（例如用户指定“写实”，就只输出“写实”），**严禁擅自添枝加叶，严禁扩写任何具体环境场景、景深光影或镜头描述**；
+   - **风格编号输入（完整原样复制生图特征，严禁压缩）**：如果用户填了**风格编号**（如 `#018`、`#239`、`240` 等，或由 AI 智能推荐选出的编号），**必须严格按照库内生图标准方式完整展开**：
+     `#{number} {generation_name}。参考作者/风格名称：{reference}。核心风格特征：{traits}。`
+     **【绝对红线】核心风格特征 `{traits}` 必须直接从 `styles.json` 中逐字逐句完整复制，绝对严禁人为压缩、提炼、总结、删减或改写！**
+     （英文对应完整复制为：`#{number} {generation_name}. Reference author/style: {reference}. Core style traits: {traits_en}.`）。
+
+5. **情绪标准化，默认源自拼接器预设库**：
+   - 除非用户在需求中明确指定了情绪词，否则【情绪】字段**必须且只能从全库【提示词拼接器】内置的 15 种标准预设中选择**：
+     `治愈 (Healing)`、`童趣 (Childlike)`、`松弛 (Relaxed)`、`幽默 (Humorous)`、`诗意 (Poetic)`、`浪漫 (Romantic)`、`活力 (Vibrant)`、`微丧 (Melancholy)`、`孤寂 (Solitary)`、`紧张 (Tense)`、`庄严 (Solemn)`、`荒诞 (Absurd)`、`恐怖 (Eerie)`、`神秘 (Mysterious)`、`激烈 (Intense)`；
+   - 严禁自行生造非标复合长句词（如“压抑、肃杀、孤注一掷的狂暴史诗感与生存觉醒”）。
+
 ---
 
 ## 输入规范与风格解析
 
+### 0. 激活方式与触发词
+- **指令激活**：用户发送以 `【风格融合设计】` 或 `风格融合设计` 开头的指令，直接激活本技能；
+- **提示词拼装器标准格式**：
+  `【风格融合设计】，角色风格：279，场景风格：写实，主题色：C-01，画幅比例：3:4，情绪：治愈，主题：山中的妖精`
+  或带有缺省选择：`【风格融合设计】，角色风格：279，场景风格：写实，其他你帮我选择，主题：山中的妖精`。
+
 ### 1. 输入维度
 用户可提供以下信息（支持自由组合）：
-- **角色风格**：全库手绘风格编号（`#001`–`#279`）或指定写实风格（如“写实摄影”、“电影级实拍”）；
-- **场景风格**：全库手绘风格编号（`#001`–`#279`）或指定写实风格（如“超写实雨夜都市摄影”、“自然纪实摄影”）；
-- **主题**：画面具体叙事事件、人物身份与动态；
-- **情绪 / 氛围**：画面的情感基调（如“孤独而温暖”、“荒诞幽默”、“史诗史诗感”、“静谧治愈”）；
+- **角色风格**：风格名称（按用户的来）或全库风格编号（`#001`–`#279`，按生图方式展开）；
+- **场景风格**：风格名称（按用户的来，如“写实”、“电影感实拍摄影”）或全库风格编号（`#001`–`#279`，按生图方式展开）；
+- **主题**：画面具体主题，生成时必须忠实保留，严禁随意扩充虚构剧情动作；
+- **情绪 / 氛围**：默认必须从提示词拼接器 15 种标准预设中选取（治愈 / 童趣 / 松弛 / 幽默 / 诗意 / 浪漫 / 活力 / 微丧 / 孤寂 / 紧张 / 庄严 / 荒诞 / 恐怖 / 神秘 / 激烈），除非用户明确另行指定；
 - **（可选）图型**：122 种图型版式编号（`SC-001`–`SC-090`, `IG-001`–`IG-032`）；
 - **（可选）主题色**：36 种经典主题色编号（`C-01`–`C-36`）；
 - **（可选）画幅比例**：默认 `3:4`，或按需指定（如 `16:9`、`9:16`、`1:1`、`5:2`、`2.35:1`）。
 
 ### 2. 智能推荐策略（未指定时）
-- **若用户仅给出主题**：由 AI 结合主题语义，在全库 279 种手绘风格与写实风格中**主动推荐一组最具反差美感与张力的【角色风格 × 场景风格】配对**（例如：极简扁平漫画角色 × 电影级超写实废墟，或水墨写意人物 × 包豪斯几何空间），并推荐 1 款主题色，给出具象化推荐理由后直接输出完整提示词。
-- **若用户仅指定角色风格**：保留角色风格，AI 结合主题推荐最具戏剧反差的场景风格。
-- **若用户仅指定场景风格**：保留场景风格，AI 结合主题推荐最具契合度的角色风格。
+- **若用户仅给出主题**：由 AI 结合主题语义，在全库 279 种手绘风格与写实风格中**主动推荐一组最具反差美感与张力的【角色风格 × 场景风格】配对**（推荐的编号按生图方式展开），从 15 种预设中挑选最匹配的情绪，推荐 1 款主题色，给出具象化推荐理由后直接输出完整提示词。
+- **若用户仅指定角色风格**：保留角色风格（若为名称则按用户的来，若为编号则按生图方式展开），AI 结合主题推荐最具戏剧反差的场景风格。
+- **若用户仅指定场景风格**：保留场景风格（若为名称则按用户的来，若为编号则按生图方式展开），AI 结合主题推荐最具契合度的角色风格。
 
 ---
 
-## 标准提示词输出模板
+> [!IMPORTANT]
+> **【核心共存规范段落必须一字不差完整复制】**
+> 提示词中从“画面中必须同时存在两套清晰可辨的视觉语言”至“主题事件明确可读”的整段共存控制指令，是生图模型（如 GPT Image、Midjourney、Flux 等）精准理解双视觉媒介解耦共存的底层核心契约。每次输出风格融合提示词时，**必须一模一样、逐字逐句完整复制附带在提示词后半部分，严禁任何形式的删减、提炼、压缩、篡改或遗漏！**
 
 ### 中文标准提示词
 
 ```text
 生成一幅“角色视觉语言 × 场景视觉语言”共存的跨媒介融合画面。
-- 【角色视觉语言】：{角色风格编号与名称，附带造型、线条与材质特征，例如：#018 Minimal Deadpan Dialogue Cartoon，极简黑白线条、死鱼眼表情与极度扁平的简笔造型}
-- 【场景视觉语言】：{场景风格编号与名称或写实风格，附带环境特征，例如：超写实电影感摄影 / #268 工笔画细腻矿物设色山水}
-- 【主题】：{画面具体事件、人物与动作描述}
-- 【情绪】：{核心情绪与空间氛围}
+- 【角色视觉语言】：{若写名称则按用户的来，若填编号则按生图方式展开：#{number} {generation_name}。参考作者/风格名称：{reference}。核心风格特征：{traits}。}
+- 【场景视觉语言】：{若写名称则按用户的来，如：写实；若填编号则按生图方式展开：#{number} {generation_name}。参考作者/风格名称：{reference}。核心风格特征：{traits}。}
+- 【主题】：{用户输入的主题，忠实保留，严禁随意扩写大段剧情动作}
+- 【情绪】：{默认从15种标准情绪预设库中选取，例如：激烈 / 孤寂 / 紧张；除非用户显式指定}
 [- 【图型】：{可选图型编号与排版特征，若无则省略本行}]
 [- 【主题色】：{可选主题色编号与名称，若无则省略本行}]
 [- 【画幅比例】：{画幅比例，默认 3:4}]
@@ -83,10 +104,10 @@ description: 跨媒介“角色视觉语言 × 场景视觉语言”双风格共
 
 ```text
 Generate a cross-media fusion artwork where "Character Visual Language × Scene Visual Language" coexist.
-- [Character Visual Language]: {Character style name and core traits, e.g., #018 Minimal Deadpan Dialogue Cartoon, minimalist black and white linework and deadpan cartoon anatomy}
-- [Scene Visual Language]: {Scene style name and core traits, e.g., Ultra-realistic cinematic photography / #268 Gongbi fine-brush mineral color landscape}
-- [Theme]: {Concrete theme description, characters, and actions}
-- [Mood]: {Core emotional mood and spatial atmosphere}
+- [Character Visual Language]: {If style name is provided, use user's exact name; if style number is provided, expand in generation format: #{number} {generation_name}. Reference author/style: {reference}. Core style traits: {traits_en}.}
+- [Scene Visual Language]: {If style name is provided, use user's exact name (e.g., Realistic photography / Cinematic photorealism); if style number is provided, expand in generation format: #{number} {generation_name}. Reference author/style: {reference}. Core style traits: {traits_en}.}
+- [Theme]: {User's theme, strictly preserved without arbitrary expansion}
+- [Mood]: {Default selected from the 15 standard presets: Healing / Childlike / Relaxed / Humorous / Poetic / Romantic / Vibrant / Melancholy / Solitary / Tense / Solemn / Absurd / Eerie / Mysterious / Intense, unless specified by user}
 [- [Layout]: {Layout ID and description, omit if none}]
 [- [Theme Color]: {Theme color ID and name, omit if none}]
 [- [Aspect Ratio]: {Aspect ratio, default 3:4}]
