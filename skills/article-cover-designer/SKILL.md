@@ -32,8 +32,8 @@ description: 极简高效的文章封面设计技能。根据输入文章自动�
 1. **生成 200 字摘要**：概括核心事件、因果逻辑与最终启示；
 2. **推算受众画像**：结合知识深度与诉求，输出 1–2 句话受众定位；
 3. **确定业务场景与画幅**：
-   - 公众号文章封面（推荐生成画幅 `21:9` 或 `16:9`）；
-   - X 文章封面（推荐生成画幅 `21:9` 或 `16:9`）；
+   - 公众号文章封面（推荐生成画幅 `2.35:1` 或 `21:9`）；
+   - X 文章封面（推荐生成画幅 `5:2`）；
    - 小红书封面（推荐生成画幅 `3:4`）；
 4. **注入风格与色彩**：输出推荐的具体风格（如 `#018 · Minimal Deadpan Dialogue Cartoon`）与主题色（如 `C-01 经典蓝`）及推荐理由；
 5. **组装标准提示词**：按照规定模板直接输出中英文提示词。
@@ -46,7 +46,7 @@ description: 极简高效的文章封面设计技能。根据输入文章自动�
 ```text
 文章摘要：{200字左右的核心摘要}。
 受众：{推算出的核心受众}
-业务场景：{公众号文章封面 / X 文章封面}。
+业务场景：{公众号文章封面 / X 文章封面 (5:2)}。
 
 风格：{风格编号及名称，如 #018 Minimal Deadpan Dialogue Cartoon}
 主题色：{主题色编号及名称，如 C-01 经典蓝}
@@ -59,7 +59,7 @@ description: 极简高效的文章封面设计技能。根据输入文章自动�
 ```text
 Article Summary: {200-word concise summary in English}.
 Audience: {Inferred target audience in English}.
-Scenario: {WeChat Official Account Cover / X Article Cover}.
+Scenario: {WeChat Official Account Cover / X Article Cover (5:2)}.
 
 Style: {Style ID and Name}
 Theme Color: {Theme Color ID and Name}

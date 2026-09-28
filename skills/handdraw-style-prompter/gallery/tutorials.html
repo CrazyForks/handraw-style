@@ -211,13 +211,13 @@ dialog::backdrop{background:#000a}
         <div class="ratio-presets-row" role="group" aria-label="画幅比例快捷预设">
           <button type="button" class="ratio-preset-btn" data-ratio="3:4" data-i18n="presetXiaohongshu">小红书/公众号贴图 (3:4)</button>
           <button type="button" class="ratio-preset-btn" data-ratio="2.35:1" data-i18n="presetWechatCover">公众号封面 (2.35:1)</button>
-          <button type="button" class="ratio-preset-btn" data-ratio="16:9" data-i18n="presetXCover">X文章封面 (16:9)</button>
+          <button type="button" class="ratio-preset-btn" data-ratio="5:2" data-i18n="presetXCover">X文章封面 (5:2)</button>
           <button type="button" class="ratio-preset-btn" data-ratio="4:3" data-i18n="presetArticleIllust">文章插图 (4:3)</button>
           <button type="button" class="ratio-preset-btn" data-ratio="1:1" data-i18n="presetSquare">方块 (1:1)</button>
           <button type="button" class="ratio-preset-btn" data-ratio="9:16" data-i18n="presetVerticalStory">手机全屏 (9:16)</button>
         </div>
         <div class="ratio-input-wrap">
-          <input type="text" id="input-ratio" class="text-input ratio-input" placeholder="输入或点击上方预设，例如：3:4、16:9、1:1（可手填）">
+          <input type="text" id="input-ratio" class="text-input ratio-input" placeholder="输入或点击上方预设，例如：3:4、5:2、1:1（可手填）">
           <button type="button" id="btn-clear-ratio" class="ratio-clear-btn" title="清空比例" aria-label="清空比例" hidden>×</button>
         </div>
       </div>
@@ -446,10 +446,10 @@ const I18N = {
     channelPlaceholder: "例如：小红书 / 微信公众号封面 / 线下门店立牌...",
     ratioLabel: "画幅比例：",
     ratioHint: "（默认不设，点击预设快捷填入，支持手动任意修改）",
-    ratioPlaceholder: "输入或点击上方预设，例如：3:4、16:9、1:1（可手填）",
+    ratioPlaceholder: "输入或点击上方预设，例如：3:4、5:2、1:1（可手填）",
     presetXiaohongshu: "小红书/公众号贴图 (3:4)",
     presetWechatCover: "公众号封面 (2.35:1)",
-    presetXCover: "X文章封面 (16:9)",
+    presetXCover: "X文章封面 (5:2)",
     presetArticleIllust: "文章插图 (4:3)",
     presetSquare: "方块 (1:1)",
     presetVerticalStory: "手机全屏 (9:16)",
@@ -550,10 +550,10 @@ const I18N = {
     channelPlaceholder: "e.g. Instagram / RED / Store poster stand...",
     ratioLabel: "Aspect Ratio:",
     ratioHint: "(Default unset; click preset or type custom ratio)",
-    ratioPlaceholder: "Enter or click preset, e.g. 3:4, 16:9, 1:1 (customizable)",
+    ratioPlaceholder: "Enter or click preset, e.g. 3:4, 5:2, 1:1 (customizable)",
     presetXiaohongshu: "RED / WeChat Sticker (3:4)",
     presetWechatCover: "WeChat Official Cover (2.35:1)",
-    presetXCover: "X Article Cover (16:9)",
+    presetXCover: "X Article Cover (5:2)",
     presetArticleIllust: "Article Illustration (4:3)",
     presetSquare: "Square (1:1)",
     presetVerticalStory: "Full Screen (9:16)",
@@ -689,7 +689,7 @@ function updatePrompt() {
     const articleDisplay = themeVal || (isZh ? '【输入文章文件地址或内容】' : '[Enter article file path or text]');
     parts.push(isZh ? `文章：${articleDisplay}` : `Article: ${articleDisplay}`);
     let scenario = isZh ? '公众号文章封面' : 'WeChat Official Account Cover';
-    if (ratioVal === '16:9') scenario = isZh ? 'X文章封面' : 'X Article Cover';
+    if (ratioVal === '5:2' || ratioVal === '16:9') scenario = isZh ? 'X文章封面' : 'X Article Cover';
     else if (ratioVal === '3:4') scenario = isZh ? '小红书封面' : 'Xiaohongshu Cover';
     else if (ratioVal === '2.35:1' || ratioVal === '21:9') scenario = isZh ? '公众号文章封面' : 'WeChat Official Account Cover';
     parts.push(isZh ? `业务场景：${scenario}` : `Scenario: ${scenario}`);
