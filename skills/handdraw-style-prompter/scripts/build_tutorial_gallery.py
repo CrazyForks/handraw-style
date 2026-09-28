@@ -141,8 +141,22 @@ main{{max-width:1240px;margin:auto;padding:24px 30px 50px}}
 .assembler-title{{margin:0;font-size:22px;font-weight:800;color:#24211e}}
 .assembler-sub{{margin:0;font-size:13.5px;color:#786f65}}
 
+/* Steps & Sections Layout */
+.assembler-steps{{display:flex;flex-direction:column;gap:16px}}
+.step-card{{background:#faf8f5;border:1px solid #e5ded4;border-radius:14px;padding:16px 20px;transition:border-color .15s,box-shadow .15s}}
+.step-card:hover{{border-color:#d5cbbe}}
+.step-card.step-output-card{{background:#fffdfa;border:1px solid #dcd3c5;border-left:4px solid #b74227}}
+.step-header{{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;margin-bottom:14px;border-bottom:1px solid #efe9df;padding-bottom:10px}}
+.step-title-wrap{{display:flex;align-items:center;gap:10px;flex-wrap:wrap}}
+.step-badge{{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#b74227;color:#fff;font-size:13px;font-weight:800;line-height:1;flex-shrink:0;box-shadow:0 1px 3px rgba(183,66,39,0.25)}}
+.step-title{{margin:0;font-size:15px;font-weight:800;color:#24211e;display:inline-flex;align-items:center;gap:6px}}
+.step-title.output-title{{color:#b74227}}
+.step-desc{{font-size:12px;font-weight:500;color:#857b70}}
+.step-toolbar{{display:flex;align-items:center;gap:8px;margin-left:auto}}
+.step-body{{display:flex;flex-direction:column;gap:12px}}
+
 /* Mode & Density Controls */
-.mode-row{{display:flex;align-items:center;gap:16px 28px;margin-bottom:18px;flex-wrap:wrap}}
+.mode-row{{display:flex;align-items:center;gap:16px 28px;flex-wrap:wrap}}
 .mode-item{{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}}
 .mode-label{{font-size:14px;font-weight:750;color:#3b352f}}
 .mode-group,.density-group{{display:inline-flex;align-items:center;gap:4px;background:#eee8df;padding:3px;border-radius:8px;border:1px solid #dcd5ca}}
@@ -151,7 +165,6 @@ main{{max-width:1240px;margin:auto;padding:24px 30px 50px}}
 .mode-btn.is-active,.density-btn.is-active{{background:#b74227;color:#fff;border-color:#b74227;box-shadow:0 1px 3px rgba(183,66,39,0.3)}}
 
 /* Form Fields */
-.form-section{{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}}
 .form-group{{display:flex;flex-direction:column;gap:5px}}
 .form-label{{font-size:13.5px;font-weight:700;color:#3b352f;display:flex;align-items:center;gap:4px}}
 .form-label .req{{color:#b74227}}
@@ -182,8 +195,8 @@ main{{max-width:1240px;margin:auto;padding:24px 30px 50px}}
 .mood-preset-btn.is-active{{background:#b74227;color:#fff;border-color:#b74227;box-shadow:0 1px 3px rgba(183,66,39,0.25)}}
 
 /* Slots Grid */
-.slots-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}}
-.slot-card{{border:1px solid #ded8cf;border-radius:12px;background:#faf8f5;padding:12px 14px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,box-shadow .15s,opacity .15s}}
+.slots-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:0}}
+.slot-card{{border:1px solid #ded8cf;border-radius:12px;background:#fff;padding:12px 14px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,box-shadow .15s,opacity .15s}}
 .slot-card.has-value{{background:#fff;border-color:#b74227;box-shadow:0 2px 8px rgba(183,66,39,0.08)}}
 .slot-card.is-disabled{{opacity:0.48;background:#f3efe8;border-color:#ded8cf;cursor:not-allowed}}
 .slot-card.is-disabled *{{pointer-events:none}}
@@ -206,21 +219,15 @@ main{{max-width:1240px;margin:auto;padding:24px 30px 50px}}
 .btn-clear{{border:0;background:transparent;color:#8c8276;font-size:16px;line-height:1;cursor:pointer;padding:2px 4px;border-radius:4px;transition:all .15s}}
 .btn-clear:hover{{color:#b74227;background:#fff0eb}}
 
-/* Toolbar */
-.assembler-toolbar{{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap}}
-.toolbar-left{{display:flex;align-items:center;gap:10px}}
-.btn-tool{{border:1px solid #c9c1b6;border-radius:7px;background:#fff;color:#403a34;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s}}
+/* Toolbar & Output */
+.btn-tool{{border:1px solid #c9c1b6;border-radius:7px;background:#fff;color:#403a34;padding:5px 11px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s}}
 .btn-tool:hover{{border-color:#b74227;color:#b74227;background:#fff8f5}}
 .btn-tool:focus-visible{{outline:2px solid #d67d4d;outline-offset:1px}}
-
-/* Output Panel */
-.output-box{{background:#f8f6f0;border-left:4px solid #b74227;border-radius:0 12px 12px 0;padding:16px 20px;border:1px solid #ded8cf;border-left-width:4px}}
-.output-header{{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap}}
-.output-title{{font-size:14px;font-weight:800;color:#b74227}}
+.output-actions{{display:flex;align-items:center}}
 .copy-main-btn{{border:0;border-radius:6px;background:#b74227;color:#fff;padding:6px 14px;font:inherit;font-size:13px;font-weight:750;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .15s,box-shadow .15s}}
 .copy-main-btn:hover{{background:#cf4f33}}
 .copy-main-btn.copied{{background:#2a854a}}
-.assembled-text{{margin:0;font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;color:#24211e;white-space:pre-wrap;word-break:break-word;background:#fff;border:1px solid #e5dfd5;border-radius:6px;padding:10px 14px}}
+.assembled-text{{margin:0;font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;color:#24211e;white-space:pre-wrap;word-break:break-word;background:#fff;border:1px solid #e5dfd5;border-radius:6px;padding:12px 14px}}
 
 /* Modal Picker */
 dialog.picker-modal{{width:min(94vw,860px);max-height:86vh;padding:20px;border:0;border-radius:14px;background:#fff;color:#24211e;box-shadow:0 20px 60px rgba(0,0,0,0.2);box-sizing:border-box}}
@@ -269,6 +276,11 @@ dialog::backdrop{{background:#000a}}
   .nav-right{{width:100%;justify-content:flex-start;gap:6px;margin-left:0}}
   .site-nav a,.nav-btn{{padding:6px 10px;font-size:13px}}
   .assembler-box{{padding:16px 18px}}
+  .step-card{{padding:14px 16px}}
+  .step-header{{flex-direction:column;align-items:flex-start;gap:10px}}
+  .step-toolbar{{margin-left:0;width:100%;justify-content:flex-start}}
+  .output-actions{{width:100%}}
+  .copy-main-btn{{width:100%;justify-content:center}}
   .modal-grid{{grid-template-columns:repeat(auto-fill,minmax(95px,1fr))}}
 }}
 </style></head><body>
@@ -286,200 +298,249 @@ dialog::backdrop{{background:#000a}}
       <p class="assembler-sub" data-i18n="assemblerSub">交互式点选图型、风格与色彩，实时拼装出图指令。</p>
     </div>
 
-    <!-- Mode & Density Controls -->
-    <div class="mode-row">
-      <div class="mode-item">
-        <span class="mode-label" data-i18n="modeLabel">出图模式：</span>
-        <div class="mode-group" role="radiogroup" aria-label="出图模式">
-          <button type="button" class="mode-btn is-active" data-mode="pure" data-i18n="modePure">纯图</button>
-          <button type="button" class="mode-btn" data-mode="graphic-text" data-i18n="modeGraphicText">图文</button>
-          <button type="button" class="mode-btn" data-mode="poster" data-i18n="modePoster">海报</button>
-          <button type="button" class="mode-btn" data-mode="article-illust" data-i18n="modeArticleIllust">文章插图</button>
-          <button type="button" class="mode-btn" data-mode="article-cover" data-i18n="modeArticleCover">文章封面</button>
-        </div>
-      </div>
-      <div class="mode-item">
-        <span class="mode-label" data-i18n="whitespaceLabel">留白：</span>
-        <div class="density-group" role="radiogroup" aria-label="留白">
-          <button type="button" class="density-btn is-active" data-whitespace="normal" data-i18n="whitespaceNormal">正常</button>
-          <button type="button" class="density-btn" data-whitespace="moderate" data-i18n="whitespaceModerate" title="【大量留白】">适中</button>
-          <button type="button" class="density-btn" data-whitespace="high" data-i18n="whitespaceHigh" title="【大量留白，场景只显示必要部分，不要显示全】">多</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Form Input Fields -->
-    <div class="form-section">
-      <div class="form-group">
-        <label for="input-theme" class="form-label">
-          <span id="theme-label-text" data-i18n="themeLabel">主题：</span>
-          <span class="req">*</span>
-        </label>
-        <textarea id="input-theme" class="text-input text-area" rows="2" placeholder="输入画面主题，例如：秋天的第一杯奶茶 / 窗台晒太阳的猫咪..."></textarea>
-      </div>
-
-      <!-- Ratio Selector Form Group -->
-      <div class="form-group ratio-form-group">
-        <div class="ratio-label-row">
-          <label for="input-ratio" class="form-label">
-            <span data-i18n="ratioLabel">画幅比例：</span>
-          </label>
-          <span class="ratio-hint" data-i18n="ratioHint">（默认不设，点击预设快捷填入，支持手动任意修改）</span>
-        </div>
-        <div class="ratio-presets-row" role="group" aria-label="画幅比例快捷预设">
-          <button type="button" class="ratio-preset-btn" data-ratio="3:4" data-i18n="presetXiaohongshu">小红书/公众号贴图 (3:4)</button>
-          <button type="button" class="ratio-preset-btn" data-ratio="2.35:1" data-i18n="presetWechatCover">公众号封面 (2.35:1)</button>
-          <button type="button" class="ratio-preset-btn" data-ratio="5:2" data-i18n="presetXCover">X文章封面 (5:2)</button>
-          <button type="button" class="ratio-preset-btn" data-ratio="4:3" data-i18n="presetArticleIllust">文章插图 (4:3)</button>
-          <button type="button" class="ratio-preset-btn" data-ratio="1:1" data-i18n="presetSquare">方块 (1:1)</button>
-          <button type="button" class="ratio-preset-btn" data-ratio="9:16" data-i18n="presetVerticalStory">手机全屏 (9:16)</button>
-        </div>
-        <div class="ratio-input-wrap">
-          <input type="text" id="input-ratio" class="text-input ratio-input" placeholder="输入或点击上方预设，例如：3:4、5:2、1:1（可手填）">
-          <button type="button" id="btn-clear-ratio" class="ratio-clear-btn" title="清空比例" aria-label="清空比例" hidden>×</button>
-        </div>
-      </div>
-
-      <!-- Mood Selector Form Group -->
-      <div class="form-group mood-form-group">
-        <div class="ratio-label-row">
-          <label for="input-mood" class="form-label">
-            <span data-i18n="moodLabel">情绪：</span>
-          </label>
-          <span class="ratio-hint" data-i18n="moodHint">（可选，点击标签多选，支持手动输入）</span>
-        </div>
-        <div class="mood-presets-row" role="group" aria-label="情绪快捷预设">
-          <button type="button" class="mood-preset-btn" data-mood-zh="治愈" data-mood-en="Healing" data-i18n="moodHealing">治愈</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="童趣" data-mood-en="Childlike" data-i18n="moodChildlike">童趣</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="松弛" data-mood-en="Relaxed" data-i18n="moodRelaxed">松弛</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="幽默" data-mood-en="Humorous" data-i18n="moodHumorous">幽默</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="诗意" data-mood-en="Poetic" data-i18n="moodPoetic">诗意</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="浪漫" data-mood-en="Romantic" data-i18n="moodRomantic">浪漫</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="活力" data-mood-en="Vibrant" data-i18n="moodVibrant">活力</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="微丧" data-mood-en="Melancholy" data-i18n="moodMelancholy">微丧</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="孤寂" data-mood-en="Solitary" data-i18n="moodSolitary">孤寂</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="紧张" data-mood-en="Tense" data-i18n="moodTense">紧张</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="庄严" data-mood-en="Solemn" data-i18n="moodSolemn">庄严</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="荒诞" data-mood-en="Absurd" data-i18n="moodAbsurd">荒诞</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="恐怖" data-mood-en="Eerie" data-i18n="moodEerie">恐怖</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="神秘" data-mood-en="Mysterious" data-i18n="moodMysterious">神秘</button>
-          <button type="button" class="mood-preset-btn" data-mood-zh="激烈" data-mood-en="Intense" data-i18n="moodIntense">激烈</button>
-        </div>
-        <div class="ratio-input-wrap">
-          <input type="text" id="input-mood" class="text-input ratio-input" placeholder="输入或点选上方情绪（可多选，例如：治愈、松弛）">
-          <button type="button" id="btn-clear-mood" class="ratio-clear-btn" title="清空情绪" aria-label="清空情绪" hidden>×</button>
-        </div>
-      </div>
-
-      <!-- Extra fields for poster mode only -->
-      <div class="extra-fields-grid" id="poster-extra-fields" hidden>
-        <div class="form-group">
-          <label for="input-audience" class="form-label" data-i18n="audienceLabel">受众：</label>
-          <input type="text" id="input-audience" class="text-input" placeholder="例如：年轻都市白领 / 露营爱好者 / 亲子家庭...">
-        </div>
-        <div class="form-group">
-          <label for="input-channel" class="form-label" data-i18n="channelLabel">海报投放渠道：</label>
-          <input type="text" id="input-channel" class="text-input" placeholder="例如：小红书 / 微信公众号封面 / 线下门店立牌...">
-        </div>
-      </div>
-    </div>
-
-    <!-- 3-in-1 Slot Pickers -->
-    <div class="slots-grid">
-      <!-- Layout Slot -->
-      <div class="slot-card" id="slot-layout">
-        <div class="slot-header">
-          <span class="slot-title">📐 <span data-i18n="slotLayout">图型</span></span>
-          <span class="slot-optional" id="slot-layout-optional" data-i18n="optionalLayout">可选 (120)</span>
-        </div>
-        <button type="button" class="slot-trigger" data-picker="layout">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-          <span data-i18n="pickLayoutText">按图选择图型</span>
-        </button>
-        <div class="slot-filled" hidden>
-          <div class="slot-img-wrap"><img src="" alt=""></div>
-          <div class="slot-meta">
-            <span class="slot-code"></span>
-            <span class="slot-name"></span>
-          </div>
-          <div class="slot-actions">
-            <button type="button" class="btn-change" data-picker="layout" data-i18n="changeBtn">更换</button>
-            <button type="button" class="btn-clear" data-clear="layout" title="清除选择" aria-label="清除选择">×</button>
+    <div class="assembler-steps">
+      <!-- Step 1: 出图模式与留白 -->
+      <section class="step-card">
+        <div class="step-header">
+          <div class="step-title-wrap">
+            <span class="step-badge">1</span>
+            <h2 class="step-title" data-i18n="step1Title">出图模式与留白</h2>
+            <span class="step-desc" data-i18n="step1Desc">（选择业务场景与画面留白等级）</span>
           </div>
         </div>
-      </div>
-
-      <!-- Style Slot -->
-      <div class="slot-card" id="slot-style">
-        <div class="slot-header">
-          <span class="slot-title">🎨 <span data-i18n="slotStyle">风格</span></span>
-          <span class="slot-optional" data-i18n="optionalStyle">可选 ({styles_count})</span>
-        </div>
-        <button type="button" class="slot-trigger" data-picker="style">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 10 10 0 0 1 0-18z"/></svg>
-          <span data-i18n="pickStyleText">按图选择风格</span>
-        </button>
-        <div class="slot-filled" hidden>
-          <div class="slot-img-wrap"><img src="" alt=""></div>
-          <div class="slot-meta">
-            <span class="slot-code"></span>
-            <span class="slot-name"></span>
-          </div>
-          <div class="slot-actions">
-            <button type="button" class="btn-change" data-picker="style" data-i18n="changeBtn">更换</button>
-            <button type="button" class="btn-clear" data-clear="style" title="清除选择" aria-label="清除选择">×</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Theme Color Slot -->
-      <div class="slot-card" id="slot-color">
-        <div class="slot-header">
-          <span class="slot-title">🌈 <span data-i18n="slotColor">主题色</span></span>
-          <span class="slot-optional" data-i18n="optionalColor">可选 (36)</span>
-        </div>
-        <button type="button" class="slot-trigger" data-picker="color">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15h18"/></svg>
-          <span data-i18n="pickColorText">按图选择色彩</span>
-        </button>
-        <div class="slot-filled" hidden>
-          <div class="slot-img-wrap"><img src="" alt=""></div>
-          <div class="slot-meta">
-            <span class="slot-code"></span>
-            <span class="slot-name"></span>
-          </div>
-          <div class="slot-actions">
-            <button type="button" class="btn-change" data-picker="color" data-i18n="changeBtn">更换</button>
-            <button type="button" class="btn-clear" data-clear="color" title="清除选择" aria-label="清除选择">×</button>
+        <div class="step-body">
+          <div class="mode-row">
+            <div class="mode-item">
+              <span class="mode-label" data-i18n="modeLabel">出图模式：</span>
+              <div class="mode-group" role="radiogroup" aria-label="出图模式">
+                <button type="button" class="mode-btn is-active" data-mode="pure" data-i18n="modePure">纯图</button>
+                <button type="button" class="mode-btn" data-mode="graphic-text" data-i18n="modeGraphicText">图文</button>
+                <button type="button" class="mode-btn" data-mode="poster" data-i18n="modePoster">海报</button>
+                <button type="button" class="mode-btn" data-mode="article-illust" data-i18n="modeArticleIllust">文章插图</button>
+                <button type="button" class="mode-btn" data-mode="article-cover" data-i18n="modeArticleCover">文章封面</button>
+              </div>
+            </div>
+            <div class="mode-item">
+              <span class="mode-label" data-i18n="whitespaceLabel">留白：</span>
+              <div class="density-group" role="radiogroup" aria-label="留白">
+                <button type="button" class="density-btn is-active" data-whitespace="normal" data-i18n="whitespaceNormal">正常</button>
+                <button type="button" class="density-btn" data-whitespace="moderate" data-i18n="whitespaceModerate" title="【大量留白】">适中</button>
+                <button type="button" class="density-btn" data-whitespace="high" data-i18n="whitespaceHigh" title="【大量留白，场景只显示必要部分，不要显示全】">多</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- Action Toolbar -->
-    <div class="assembler-toolbar">
-      <div class="toolbar-left">
-        <button type="button" id="btn-gacha" class="btn-tool" title="随机抽选图型、风格与色彩">
-          <span>🎲</span>
-          <span data-i18n="gachaBtn">智能随机抽卡</span>
-        </button>
-        <button type="button" id="btn-reset" class="btn-tool" title="清空全部已选">
-          <span>🧹</span>
-          <span data-i18n="resetBtn">一键清空</span>
-        </button>
-      </div>
-    </div>
+      <!-- Step 2: 画面主题与内容 -->
+      <section class="step-card">
+        <div class="step-header">
+          <div class="step-title-wrap">
+            <span class="step-badge">2</span>
+            <h2 class="step-title" data-i18n="step2Title">画面主题与内容</h2>
+            <span class="step-desc" data-i18n="step2Desc">（输入画面主题、文章路径或提示词核心文案）</span>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="form-group">
+            <label for="input-theme" class="form-label">
+              <span id="theme-label-text" data-i18n="themeLabel">主题：</span>
+              <span class="req">*</span>
+            </label>
+            <textarea id="input-theme" class="text-input text-area" rows="2" placeholder="输入画面主题，例如：秋天的第一杯奶茶 / 窗台晒太阳的猫咪..."></textarea>
+          </div>
 
-    <!-- Prompt Output Box -->
-    <div class="output-box">
-      <div class="output-header">
-        <span class="output-title" data-i18n="outputTitle">📋 拼装生成的出图指令：</span>
-        <button type="button" id="btn-copy-assembled" class="copy-main-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          <span id="copy-btn-text" data-i18n="copyPromptBtn">复制出图指令</span>
-        </button>
-      </div>
-      <pre class="assembled-text" id="assembled-text"></pre>
+          <!-- Extra fields for poster mode only -->
+          <div class="extra-fields-grid" id="poster-extra-fields" hidden>
+            <div class="form-group">
+              <label for="input-audience" class="form-label" data-i18n="audienceLabel">受众：</label>
+              <input type="text" id="input-audience" class="text-input" placeholder="例如：年轻都市白领 / 露营爱好者 / 亲子家庭...">
+            </div>
+            <div class="form-group">
+              <label for="input-channel" class="form-label" data-i18n="channelLabel">海报投放渠道：</label>
+              <input type="text" id="input-channel" class="text-input" placeholder="例如：小红书 / 微信公众号封面 / 线下门店立牌...">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 3: 画幅比例与情绪 -->
+      <section class="step-card">
+        <div class="step-header">
+          <div class="step-title-wrap">
+            <span class="step-badge">3</span>
+            <h2 class="step-title" data-i18n="step3Title">画幅比例与情绪</h2>
+            <span class="step-desc" data-i18n="step3Desc">（设定目标出图画幅与画面情感基调，可选）</span>
+          </div>
+        </div>
+        <div class="step-body">
+          <!-- Ratio Selector Form Group -->
+          <div class="form-group ratio-form-group">
+            <div class="ratio-label-row">
+              <label for="input-ratio" class="form-label">
+                <span data-i18n="ratioLabel">画幅比例：</span>
+              </label>
+              <span class="ratio-hint" data-i18n="ratioHint">（默认不设，点击预设快捷填入，支持手动任意修改）</span>
+            </div>
+            <div class="ratio-presets-row" role="group" aria-label="画幅比例快捷预设">
+              <button type="button" class="ratio-preset-btn" data-ratio="3:4" data-i18n="presetXiaohongshu">小红书/公众号贴图 (3:4)</button>
+              <button type="button" class="ratio-preset-btn" data-ratio="2.35:1" data-i18n="presetWechatCover">公众号封面 (2.35:1)</button>
+              <button type="button" class="ratio-preset-btn" data-ratio="5:2" data-i18n="presetXCover">X文章封面 (5:2)</button>
+              <button type="button" class="ratio-preset-btn" data-ratio="4:3" data-i18n="presetArticleIllust">文章插图 (4:3)</button>
+              <button type="button" class="ratio-preset-btn" data-ratio="1:1" data-i18n="presetSquare">方块 (1:1)</button>
+              <button type="button" class="ratio-preset-btn" data-ratio="9:16" data-i18n="presetVerticalStory">手机全屏 (9:16)</button>
+            </div>
+            <div class="ratio-input-wrap">
+              <input type="text" id="input-ratio" class="text-input ratio-input" placeholder="输入或点击上方预设，例如：3:4、5:2、1:1（可手填）">
+              <button type="button" id="btn-clear-ratio" class="ratio-clear-btn" title="清空比例" aria-label="清空比例" hidden>×</button>
+            </div>
+          </div>
+
+          <!-- Mood Selector Form Group -->
+          <div class="form-group mood-form-group">
+            <div class="ratio-label-row">
+              <label for="input-mood" class="form-label">
+                <span data-i18n="moodLabel">情绪：</span>
+              </label>
+              <span class="ratio-hint" data-i18n="moodHint">（可选，点击标签多选，支持手动输入）</span>
+            </div>
+            <div class="mood-presets-row" role="group" aria-label="情绪快捷预设">
+              <button type="button" class="mood-preset-btn" data-mood-zh="治愈" data-mood-en="Healing" data-i18n="moodHealing">治愈</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="童趣" data-mood-en="Childlike" data-i18n="moodChildlike">童趣</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="松弛" data-mood-en="Relaxed" data-i18n="moodRelaxed">松弛</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="幽默" data-mood-en="Humorous" data-i18n="moodHumorous">幽默</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="诗意" data-mood-en="Poetic" data-i18n="moodPoetic">诗意</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="浪漫" data-mood-en="Romantic" data-i18n="moodRomantic">浪漫</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="活力" data-mood-en="Vibrant" data-i18n="moodVibrant">活力</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="微丧" data-mood-en="Melancholy" data-i18n="moodMelancholy">微丧</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="孤寂" data-mood-en="Solitary" data-i18n="moodSolitary">孤寂</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="紧张" data-mood-en="Tense" data-i18n="moodTense">紧张</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="庄严" data-mood-en="Solemn" data-i18n="moodSolemn">庄严</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="荒诞" data-mood-en="Absurd" data-i18n="moodAbsurd">荒诞</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="恐怖" data-mood-en="Eerie" data-i18n="moodEerie">恐怖</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="神秘" data-mood-en="Mysterious" data-i18n="moodMysterious">神秘</button>
+              <button type="button" class="mood-preset-btn" data-mood-zh="激烈" data-mood-en="Intense" data-i18n="moodIntense">激烈</button>
+            </div>
+            <div class="ratio-input-wrap">
+              <input type="text" id="input-mood" class="text-input ratio-input" placeholder="输入或点选上方情绪（可多选，例如：治愈、松弛）">
+              <button type="button" id="btn-clear-mood" class="ratio-clear-btn" title="清空情绪" aria-label="清空情绪" hidden>×</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 4: 画廊视觉元素搭配 -->
+      <section class="step-card">
+        <div class="step-header">
+          <div class="step-title-wrap">
+            <span class="step-badge">4</span>
+            <h2 class="step-title" data-i18n="step4Title">图型 · 风格 · 色彩搭配</h2>
+            <span class="step-desc" data-i18n="step4Desc">（从画廊中点选视觉组件，未选部分由模型自由发挥）</span>
+          </div>
+          <div class="step-toolbar">
+            <button type="button" id="btn-gacha" class="btn-tool" title="随机抽选图型、风格与色彩">
+              <span>🎲</span>
+              <span data-i18n="gachaBtn">智能随机抽卡</span>
+            </button>
+            <button type="button" id="btn-reset" class="btn-tool" title="清空全部已选">
+              <span>🧹</span>
+              <span data-i18n="resetBtn">一键清空</span>
+            </button>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="slots-grid">
+            <!-- Layout Slot -->
+            <div class="slot-card" id="slot-layout">
+              <div class="slot-header">
+                <span class="slot-title">📐 <span data-i18n="slotLayout">图型</span></span>
+                <span class="slot-optional" id="slot-layout-optional" data-i18n="optionalLayout">可选 (120)</span>
+              </div>
+              <button type="button" class="slot-trigger" data-picker="layout">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                <span data-i18n="pickLayoutText">按图选择图型</span>
+              </button>
+              <div class="slot-filled" hidden>
+                <div class="slot-img-wrap"><img src="" alt=""></div>
+                <div class="slot-meta">
+                  <span class="slot-code"></span>
+                  <span class="slot-name"></span>
+                </div>
+                <div class="slot-actions">
+                  <button type="button" class="btn-change" data-picker="layout" data-i18n="changeBtn">更换</button>
+                  <button type="button" class="btn-clear" data-clear="layout" title="清除选择" aria-label="清除选择">×</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Style Slot -->
+            <div class="slot-card" id="slot-style">
+              <div class="slot-header">
+                <span class="slot-title">🎨 <span data-i18n="slotStyle">风格</span></span>
+                <span class="slot-optional" data-i18n="optionalStyle">可选 ({styles_count})</span>
+              </div>
+              <button type="button" class="slot-trigger" data-picker="style">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 10 10 0 0 1 0-18z"/></svg>
+                <span data-i18n="pickStyleText">按图选择风格</span>
+              </button>
+              <div class="slot-filled" hidden>
+                <div class="slot-img-wrap"><img src="" alt=""></div>
+                <div class="slot-meta">
+                  <span class="slot-code"></span>
+                  <span class="slot-name"></span>
+                </div>
+                <div class="slot-actions">
+                  <button type="button" class="btn-change" data-picker="style" data-i18n="changeBtn">更换</button>
+                  <button type="button" class="btn-clear" data-clear="style" title="清除选择" aria-label="清除选择">×</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Theme Color Slot -->
+            <div class="slot-card" id="slot-color">
+              <div class="slot-header">
+                <span class="slot-title">🌈 <span data-i18n="slotColor">主题色</span></span>
+                <span class="slot-optional" data-i18n="optionalColor">可选 (36)</span>
+              </div>
+              <button type="button" class="slot-trigger" data-picker="color">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15h18"/></svg>
+                <span data-i18n="pickColorText">按图选择色彩</span>
+              </button>
+              <div class="slot-filled" hidden>
+                <div class="slot-img-wrap"><img src="" alt=""></div>
+                <div class="slot-meta">
+                  <span class="slot-code"></span>
+                  <span class="slot-name"></span>
+                </div>
+                <div class="slot-actions">
+                  <button type="button" class="btn-change" data-picker="color" data-i18n="changeBtn">更换</button>
+                  <button type="button" class="btn-clear" data-clear="color" title="清除选择" aria-label="清除选择">×</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 5: 拼装出图指令 -->
+      <section class="step-card step-output-card">
+        <div class="step-header">
+          <div class="step-title-wrap">
+            <span class="step-badge">5</span>
+            <h2 class="step-title output-title" data-i18n="step5Title">拼装生成的出图指令</h2>
+            <span class="step-desc" data-i18n="step5Desc">（参数已实时合成，复制即可前往生图工具出图）</span>
+          </div>
+          <div class="output-actions">
+            <button type="button" id="btn-copy-assembled" class="copy-main-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span id="copy-btn-text" data-i18n="copyPromptBtn">复制出图指令</span>
+            </button>
+          </div>
+        </div>
+        <div class="step-body">
+          <pre class="assembled-text" id="assembled-text"></pre>
+        </div>
+      </section>
     </div>
   </div>
 </section>
@@ -538,6 +599,16 @@ const I18N = {{
     wechatBtn: "💬 创作变现交流群",
     assemblerTitle: "🛠️ 提示词拼装器",
     assemblerSub: "交互式点选图型、风格与色彩，实时拼装出图指令。",
+    step1Title: "出图模式与留白",
+    step1Desc: "（选择业务场景与画面留白等级）",
+    step2Title: "画面主题与内容",
+    step2Desc: "（输入画面主题、文章路径或提示词核心文案）",
+    step3Title: "画幅比例与情绪",
+    step3Desc: "（设定目标出图画幅与画面情感基调，可选）",
+    step4Title: "图型 · 风格 · 色彩搭配",
+    step4Desc: "（从画廊中点选视觉组件，未选部分由模型自由发挥）",
+    step5Title: "拼装生成的出图指令",
+    step5Desc: "（参数已实时合成，复制即可前往生图工具出图）",
     modeLabel: "出图模式：",
     modePure: "纯图",
     modeGraphicText: "图文",
@@ -642,6 +713,16 @@ const I18N = {{
     wechatBtn: "💬 Creator Community",
     assemblerTitle: "🛠️ Prompt Assembler",
     assemblerSub: "Visually select layout, style, and color to assemble prompt commands in real time.",
+    step1Title: "Mode & Negative Space",
+    step1Desc: "(Select generation mode and negative space level)",
+    step2Title: "Theme & Content",
+    step2Desc: "(Enter subject description, article file path, or summary text)",
+    step3Title: "Aspect Ratio & Mood",
+    step3Desc: "(Set target aspect ratio and emotional tone, optional)",
+    step4Title: "Visual Assets: Layout, Style & Color",
+    step4Desc: "(Pick visual components from the gallery, or let model decide)",
+    step5Title: "Generated Prompt Command",
+    step5Desc: "(Parameters assembled in real time, copy and paste to generate)",
     modeLabel: "Mode:",
     modePure: "Image Only",
     modeGraphicText: "Graphic-Text",
