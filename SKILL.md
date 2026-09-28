@@ -24,7 +24,10 @@ before handling the request. Use the hand-drawn style rules in
 resolution and prompt construction.
 
 When the user asks to design a poster, generate poster prompts, or create structured poster prompts, read and invoke
-[poster-prompt-generator](skills/poster-prompt-generator/SKILL.md), actively recommending cohesive style and theme color pairings from the hand-drawn style library (#001–#278) and theme color library (C-01–C-36).
+[poster-prompt-generator](skills/poster-prompt-generator/SKILL.md), actively recommending cohesive style and theme color pairings from the hand-drawn style library (#001–#279) and theme color library (C-01–C-36).
+
+When the user asks to design an article cover, generate cover prompts, create a WeChat official account cover, or design an X/social cover for an article (例如“给文章做封面”、“文章封面设计”、“公众号封面”、“X文章头图”), read and invoke
+[article-cover-designer](skills/article-cover-designer/SKILL.md) before handling the request. It extracts a ~200-word summary, infers target audience, sets the business scenario, injects style (#001–#279) and theme color (C-01–C-36), and applies the fixed prompt instruction ("先设计隐喻再出图，主标题明显，小字少或者没有小字。 其他你帮我设计。").
 
 ## Default mode
 
@@ -37,13 +40,13 @@ Default to creating prompts only. Do not call an image-generation tool unless th
 > [!IMPORTANT]
 > **【核心准则：每次由 AI 实时动态判断，严禁写死/机械套用】**
 > - **实时动态研判**：严禁在记忆、规则或提示词中维护任何“主题关键词 -> 固定风格编号/颜色编号”的静态死板映射（例如严禁一见节气/传统就推 268、一见自然就推 266、一见科技就推 011/054、一见生活就推 018）。
-> - **全库开放式匹配**：每次推荐必须由 AI 结合当前用户具体主题的深层语境、精神内核、视觉隐喻与画面构图，在全库 278 种手绘风格（#001–#278）与 36 种经典主题色（C-01–C-36）中进行**实时、开放式的审美推理与动态搭配**。
-> - **激发全库多样性**：同一个主题在不同设计视角下具备多维的美学可能性（如“菜园”既可以是水墨写意、也可以是田园木刻版画、粗粒油画棒、或包豪斯几何构成）。每次推荐都应根据具体切入点构思，充分展现全库 278 种画风与 36 种色彩的丰富生命力。
+> - **全库开放式匹配**：每次推荐必须由 AI 结合当前用户具体主题的深层语境、精神内核、视觉隐喻与画面构图，在全库 279 种手绘风格（#001–#279）与 36 种经典主题色（C-01–C-36）中进行**实时、开放式的审美推理与动态搭配**。
+> - **激发全库多样性**：同一个主题在不同设计视角下具备多维的美学可能性（如“菜园”既可以是水墨写意、也可以是田园木刻版画、粗粒油画棒、或包豪斯几何构成）。每次推荐都应根据具体切入点构思，充分展现全库 279 种画风与 36 种色彩的丰富生命力。
 > - **美学理由具象化**：AI 给出的美学推荐理由必须紧扣当前主题的视觉隐喻和画面构图，说明为什么该画风的笔触/质感与该色彩的情绪能完美传达这一主题，杜绝套话。
 
-1. **风格与主题色均未指定**：根据用户输入的主题语义、情感基调、受众与使用场景，由 AI 实时动态从 278 种手绘风格与 36 种经典单色库中推荐 1 组契合度最高的【风格编号 (#001–#278) + 主题色编号 (C-01–C-36)】组合。主题色数量不设死限，依据画面层次灵活决定单色统领、双色搭配（主色+点缀色）或三色调和，简述 1 句具象化美学推荐理由，并直接输出完整生图提示词（或执行出图）。
+1. **风格与主题色均未指定**：根据用户输入的主题语义、情感基调、受众与使用场景，由 AI 实时动态从 279 种手绘风格与 36 种经典单色库中推荐 1 组契合度最高的【风格编号 (#001–#279) + 主题色编号 (C-01–C-36)】组合。主题色数量不设死限，依据画面层次灵活决定单色统领、双色搭配（主色+点缀色）或三色调和，简述 1 句具象化美学推荐理由，并直接输出完整生图提示词（或执行出图）。
 2. **仅指定风格，未指定主题色**：严格保留用户指定的风格，根据该风格与画面主题，由 AI 实时动态推荐最协调的【主题色 (C-01–C-36)】搭配（可为单色或多色组合）。
-3. **仅指定主题色，未指定风格**：严格保留用户指定的主题色，根据色彩调性与画面主题，由 AI 实时动态推荐 1 款最契合的【手绘风格 (#001–#278)】搭配。
+3. **仅指定主题色，未指定风格**：严格保留用户指定的主题色，根据色彩调性与画面主题，由 AI 实时动态推荐 1 款最契合的【手绘风格 (#001–#279)】搭配。
 4. **两者皆指定**：完全遵照用户指定的内容输出。
 
 ## Style activation policy
