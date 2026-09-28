@@ -294,7 +294,8 @@ dialog::backdrop{{background:#000a}}
           <button type="button" class="mode-btn is-active" data-mode="pure" data-i18n="modePure">纯图</button>
           <button type="button" class="mode-btn" data-mode="graphic-text" data-i18n="modeGraphicText">图文</button>
           <button type="button" class="mode-btn" data-mode="poster" data-i18n="modePoster">海报</button>
-          <button type="button" class="mode-btn" data-mode="article-illust" data-i18n="modeArticleIllust">文章配图</button>
+          <button type="button" class="mode-btn" data-mode="article-illust" data-i18n="modeArticleIllust">文章插图</button>
+          <button type="button" class="mode-btn" data-mode="article-cover" data-i18n="modeArticleCover">文章封面</button>
         </div>
       </div>
       <div class="mode-item">
@@ -329,7 +330,7 @@ dialog::backdrop{{background:#000a}}
           <button type="button" class="ratio-preset-btn" data-ratio="3:4" data-i18n="presetXiaohongshu">小红书/公众号贴图 (3:4)</button>
           <button type="button" class="ratio-preset-btn" data-ratio="2.35:1" data-i18n="presetWechatCover">公众号封面 (2.35:1)</button>
           <button type="button" class="ratio-preset-btn" data-ratio="16:9" data-i18n="presetXCover">X文章封面 (16:9)</button>
-          <button type="button" class="ratio-preset-btn" data-ratio="4:3" data-i18n="presetArticleImg">文章配图 (4:3)</button>
+          <button type="button" class="ratio-preset-btn" data-ratio="4:3" data-i18n="presetArticleIllust">文章插图 (4:3)</button>
           <button type="button" class="ratio-preset-btn" data-ratio="1:1" data-i18n="presetSquare">方块 (1:1)</button>
           <button type="button" class="ratio-preset-btn" data-ratio="9:16" data-i18n="presetVerticalStory">手机全屏 (9:16)</button>
         </div>
@@ -541,7 +542,8 @@ const I18N = {{
     modePure: "纯图",
     modeGraphicText: "图文",
     modePoster: "海报",
-    modeArticleIllust: "文章配图",
+    modeArticleIllust: "文章插图",
+    modeArticleCover: "文章封面",
     whitespaceLabel: "留白：",
     whitespaceNormal: "正常",
     whitespaceModerate: "适中",
@@ -550,10 +552,13 @@ const I18N = {{
     whitespaceHighPrompt: "【大量留白，场景只显示必要部分，不要显示全】",
     themeLabel: "主题：",
     articlePathLabel: "文章文件地址：",
+    articleCoverPathLabel: "文章文件地址或内容：",
     audienceLabel: "受众：",
     channelLabel: "海报投放渠道：",
     themePlaceholder: "输入画面主题，例如：秋天的第一杯奶茶 / 窗台晒太阳的猫咪...",
     articlePathPlaceholder: "请输入文章的本地绝对路径，例如：D:\\\\path\\\\to\\\\article.md...",
+    articleCoverPathPlaceholder: "请输入文章的本地绝对路径（例如：D:\\\\path\\\\to\\\\article.md）或直接粘贴文章内容...",
+    articleCoverFixedPrompt: "先设计隐喻再出图，主标题明显，小字少或者没有小字。 其他你帮我设计。",
     audiencePlaceholder: "例如：年轻都市白领 / 露营爱好者 / 亲子家庭...",
     channelPlaceholder: "例如：小红书 / 微信公众号封面 / 线下门店立牌...",
     ratioLabel: "画幅比例：",
@@ -562,7 +567,7 @@ const I18N = {{
     presetXiaohongshu: "小红书/公众号贴图 (3:4)",
     presetWechatCover: "公众号封面 (2.35:1)",
     presetXCover: "X文章封面 (16:9)",
-    presetArticleImg: "文章配图 (4:3)",
+    presetArticleIllust: "文章插图 (4:3)",
     presetSquare: "方块 (1:1)",
     presetVerticalStory: "手机全屏 (9:16)",
     moodLabel: "情绪：",
@@ -642,6 +647,7 @@ const I18N = {{
     modeGraphicText: "Graphic-Text",
     modePoster: "Poster",
     modeArticleIllust: "Article Illustration",
+    modeArticleCover: "Article Cover",
     whitespaceLabel: "Negative Space:",
     whitespaceNormal: "Normal",
     whitespaceModerate: "Moderate",
@@ -650,10 +656,13 @@ const I18N = {{
     whitespaceHighPrompt: "[Generous negative space, scene shows only essential parts, do not show in full]",
     themeLabel: "Theme:",
     articlePathLabel: "Article File Path:",
+    articleCoverPathLabel: "Article File Path or Text:",
     audienceLabel: "Audience:",
     channelLabel: "Distribution Channel:",
     themePlaceholder: "Enter theme, e.g. Autumn milk tea / Cat sunbathing on windowsill...",
     articlePathPlaceholder: "Enter absolute local file path, e.g. D:\\\\path\\\\to\\\\article.md...",
+    articleCoverPathPlaceholder: "Enter absolute local file path (e.g. D:\\\\path\\\\to\\\\article.md) or paste article text...",
+    articleCoverFixedPrompt: "Design a visual metaphor first, then generate the image. Ensure the main title is bold and prominent, with few or no small text. Pick the rest of the design for me.",
     audiencePlaceholder: "e.g. Young urban professionals / Campers / Families...",
     channelPlaceholder: "e.g. Instagram / RED / Store poster stand...",
     ratioLabel: "Aspect Ratio:",
@@ -662,7 +671,7 @@ const I18N = {{
     presetXiaohongshu: "RED / WeChat Sticker (3:4)",
     presetWechatCover: "WeChat Official Cover (2.35:1)",
     presetXCover: "X Article Cover (16:9)",
-    presetArticleImg: "Article Illustration (4:3)",
+    presetArticleIllust: "Article Illustration (4:3)",
     presetSquare: "Square (1:1)",
     presetVerticalStory: "Full Screen (9:16)",
     moodLabel: "Mood:",
@@ -743,11 +752,13 @@ function updatePrompt() {{
   }} else if (currentMode === 'graphic-text') {{
     parts.push(isZh ? '图文模式' : 'Graphic-text mode');
   }} else if (currentMode === 'article-illust') {{
-    parts.push(isZh ? '文章配图模式' : 'Article illustration mode');
+    parts.push(isZh ? '文章插图模式' : 'Article illustration mode');
+  }} else if (currentMode === 'article-cover') {{
+    parts.push(isZh ? '请设计文章封面' : 'Please design an article cover');
   }}
 
   // Layout
-  if (selectedLayout && currentMode !== 'article-illust') {{
+  if (selectedLayout && currentMode !== 'article-illust' && currentMode !== 'article-cover') {{
     parts.push(isZh ? `图型：${{selectedLayout.id}}` : `Layout: ${{selectedLayout.id}}`);
   }}
 
@@ -791,6 +802,15 @@ function updatePrompt() {{
   if (currentMode === 'article-illust') {{
     const articleDisplay = themeVal || t.articlePathEmptyText;
     parts.push(isZh ? `文章文件地址：${{articleDisplay}}` : `Article file path: ${{articleDisplay}}`);
+  }} else if (currentMode === 'article-cover') {{
+    const articleDisplay = themeVal || (isZh ? '【输入文章文件地址或内容】' : '[Enter article file path or text]');
+    parts.push(isZh ? `文章：${{articleDisplay}}` : `Article: ${{articleDisplay}}`);
+    let scenario = isZh ? '公众号文章封面' : 'WeChat Official Account Cover';
+    if (ratioVal === '16:9') scenario = isZh ? 'X文章封面' : 'X Article Cover';
+    else if (ratioVal === '3:4') scenario = isZh ? '小红书封面' : 'Xiaohongshu Cover';
+    else if (ratioVal === '2.35:1' || ratioVal === '21:9') scenario = isZh ? '公众号文章封面' : 'WeChat Official Account Cover';
+    parts.push(isZh ? `业务场景：${{scenario}}` : `Scenario: ${{scenario}}`);
+    parts.push(t.articleCoverFixedPrompt);
   }} else {{
     const themeDisplay = themeVal || t.themeEmptyText;
     parts.push(isZh ? `主题：${{themeDisplay}}` : `Theme: ${{themeDisplay}}`);
@@ -857,19 +877,21 @@ function setMode(mode) {{
   const slotLayout = document.querySelector('#slot-layout');
   const optTag = document.querySelector('#slot-layout-optional');
   const isIllust = mode === 'article-illust';
+  const isCover = mode === 'article-cover';
+  const isArticleTask = isIllust || isCover;
   if (slotLayout) {{
-    slotLayout.classList.toggle('is-disabled', isIllust);
+    slotLayout.classList.toggle('is-disabled', isArticleTask);
     const triggerBtn = slotLayout.querySelector('.slot-trigger');
-    if (triggerBtn) triggerBtn.disabled = isIllust;
+    if (triggerBtn) triggerBtn.disabled = isArticleTask;
     const changeBtn = slotLayout.querySelector('.btn-change');
-    if (changeBtn) changeBtn.disabled = isIllust;
+    if (changeBtn) changeBtn.disabled = isArticleTask;
     const clearBtn = slotLayout.querySelector('.btn-clear');
-    if (clearBtn) clearBtn.disabled = isIllust;
+    if (clearBtn) clearBtn.disabled = isArticleTask;
   }}
   if (optTag) {{
-    optTag.textContent = isIllust ? I18N[currentLang].layoutNotApplicable : I18N[currentLang].optionalLayout;
+    optTag.textContent = isArticleTask ? I18N[currentLang].layoutNotApplicable : I18N[currentLang].optionalLayout;
   }}
-  if (isIllust && selectedLayout) {{
+  if (isArticleTask && selectedLayout) {{
     selectedLayout = null;
     updateSlotUI('layout');
   }}
@@ -884,6 +906,16 @@ function setMode(mode) {{
     }}
     if (themeLabelText) themeLabelText.textContent = I18N[currentLang].articlePathLabel;
     if (inputTheme) inputTheme.placeholder = I18N[currentLang].articlePathPlaceholder;
+  }} else if (mode === 'article-cover') {{
+    if (inputRatio) {{
+      inputRatio.value = '2.35:1';
+      if (btnClearRatio) btnClearRatio.hidden = false;
+      document.querySelectorAll('.ratio-preset-btn').forEach(b => {{
+        b.classList.toggle('is-active', b.dataset.ratio === '2.35:1');
+      }});
+    }}
+    if (themeLabelText) themeLabelText.textContent = I18N[currentLang].articleCoverPathLabel;
+    if (inputTheme) inputTheme.placeholder = I18N[currentLang].articleCoverPathPlaceholder;
   }} else {{
     if (themeLabelText) themeLabelText.textContent = I18N[currentLang].themeLabel;
     if (inputTheme) inputTheme.placeholder = I18N[currentLang].themePlaceholder;
@@ -901,7 +933,7 @@ function setWhitespace(val) {{
 
 // Visual Picker Logic
 function openPicker(type) {{
-  if (type === 'layout' && currentMode === 'article-illust') return;
+  if (type === 'layout' && (currentMode === 'article-illust' || currentMode === 'article-cover')) return;
   currentPickerType = type;
   currentPickerFilter = 'all';
   pickerSearch.value = '';
@@ -1040,14 +1072,14 @@ pickerDialog.addEventListener('click', e => {{ if (e.target === pickerDialog) pi
 document.addEventListener('click', e => {{
   const trigger = e.target.closest('[data-picker]');
   if (trigger) {{
-    if (trigger.dataset.picker === 'layout' && currentMode === 'article-illust') return;
+    if (trigger.dataset.picker === 'layout' && (currentMode === 'article-illust' || currentMode === 'article-cover')) return;
     openPicker(trigger.dataset.picker);
     return;
   }}
   const clearBtn = e.target.closest('[data-clear]');
   if (clearBtn) {{
     const type = clearBtn.dataset.clear;
-    if (type === 'layout' && currentMode === 'article-illust') return;
+    if (type === 'layout' && (currentMode === 'article-illust' || currentMode === 'article-cover')) return;
     if (type === 'layout') selectedLayout = null;
     if (type === 'style') selectedStyle = null;
     if (type === 'color') selectedColor = null;
@@ -1184,8 +1216,8 @@ if (btnClearMood) {{
 
 // Toolbar Actions: Gacha & Reset
 document.querySelector('#btn-gacha').addEventListener('click', () => {{
-  // Random layout (skip in article-illust mode)
-  if (currentMode !== 'article-illust') {{
+  // Random layout (skip in article-illust and article-cover mode)
+  if (currentMode !== 'article-illust' && currentMode !== 'article-cover') {{
     selectedLayout = LAYOUTS_DATA[Math.floor(Math.random() * LAYOUTS_DATA.length)];
   }} else {{
     selectedLayout = null;
@@ -1272,7 +1304,7 @@ function applyLang(lang) {{
   }});
 
   const optTag = document.querySelector('#slot-layout-optional');
-  if (optTag && currentMode === 'article-illust') {{
+  if (optTag && (currentMode === 'article-illust' || currentMode === 'article-cover')) {{
     optTag.textContent = t.layoutNotApplicable;
   }}
 
@@ -1284,6 +1316,9 @@ function applyLang(lang) {{
   if (currentMode === 'article-illust') {{
     if (themeLabelText) themeLabelText.textContent = t.articlePathLabel;
     if (inputTheme) inputTheme.placeholder = t.articlePathPlaceholder;
+  }} else if (currentMode === 'article-cover') {{
+    if (themeLabelText) themeLabelText.textContent = t.articleCoverPathLabel;
+    if (inputTheme) inputTheme.placeholder = t.articleCoverPathPlaceholder;
   }} else {{
     if (themeLabelText) themeLabelText.textContent = t.themeLabel;
     if (inputTheme) inputTheme.placeholder = t.themePlaceholder;
