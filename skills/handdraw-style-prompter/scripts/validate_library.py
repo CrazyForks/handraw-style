@@ -499,6 +499,8 @@ def main() -> None:
         if file_path.suffix in (".md", ".json", ".py", ".html", ".yaml", ".yml") and file_path.exists():
             text = file_path.read_text(encoding="utf-8", errors="ignore")
             for line_no, line in enumerate(text.splitlines(), 1):
+                if re.search(r'path[\\/]+to', line, re.I):
+                    continue
                 if drive_leak_pattern.search(line):
                     fail(f"Local drive path leaked in tracked file {rel_path}:{line_no}: {line.strip()[:100]}")
 

@@ -95,6 +95,9 @@ def build_html() -> str:
     styles_json_str = json.dumps(styles_data, ensure_ascii=False, separators=(",", ":"))
     layouts_json_str = json.dumps(layouts_data, ensure_ascii=False, separators=(",", ":"))
     colors_json_str = json.dumps(colors_data, ensure_ascii=False, separators=(",", ":"))
+    styles_count = len(styles_data)
+    layouts_count = len(layouts_data)
+    colors_count = len(colors_data)
     color_categories_data = [{"id": cid, "zh": czh, "en": cen} for cid, czh, cen in COLOR_CATEGORIES]
     color_categories_json_str = json.dumps(color_categories_data, ensure_ascii=False, separators=(",", ":"))
 
@@ -138,13 +141,14 @@ main{{max-width:1240px;margin:auto;padding:24px 30px 50px}}
 .assembler-title{{margin:0;font-size:22px;font-weight:800;color:#24211e}}
 .assembler-sub{{margin:0;font-size:13.5px;color:#786f65}}
 
-/* Mode Radiobox */
-.mode-row{{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}}
+/* Mode & Density Controls */
+.mode-row{{display:flex;align-items:center;gap:16px 28px;margin-bottom:18px;flex-wrap:wrap}}
+.mode-item{{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}}
 .mode-label{{font-size:14px;font-weight:750;color:#3b352f}}
-.mode-group{{display:inline-flex;align-items:center;gap:4px;background:#eee8df;padding:3px;border-radius:8px;border:1px solid #dcd5ca}}
-.mode-btn{{border:1px solid transparent;background:transparent;color:#514a43;font:inherit;font-size:13px;font-weight:750;padding:5px 14px;border-radius:6px;cursor:pointer;line-height:1.3;transition:all .15s}}
-.mode-btn:hover{{color:#b74227;background:#ffffffa0}}
-.mode-btn.is-active{{background:#b74227;color:#fff;border-color:#b74227;box-shadow:0 1px 3px rgba(183,66,39,0.3)}}
+.mode-group,.density-group{{display:inline-flex;align-items:center;gap:4px;background:#eee8df;padding:3px;border-radius:8px;border:1px solid #dcd5ca}}
+.mode-btn,.density-btn{{border:1px solid transparent;background:transparent;color:#514a43;font:inherit;font-size:13px;font-weight:750;padding:5px 14px;border-radius:6px;cursor:pointer;line-height:1.3;transition:all .15s}}
+.mode-btn:hover,.density-btn:hover{{color:#b74227;background:#ffffffa0}}
+.mode-btn.is-active,.density-btn.is-active{{background:#b74227;color:#fff;border-color:#b74227;box-shadow:0 1px 3px rgba(183,66,39,0.3)}}
 
 /* Form Fields */
 .form-section{{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}}
@@ -157,10 +161,34 @@ main{{max-width:1240px;margin:auto;padding:24px 30px 50px}}
 .extra-fields-grid{{display:grid;grid-template-columns:1fr 1fr;gap:14px}}
 .extra-fields-grid[hidden]{{display:none!important}}
 
+/* Aspect Ratio Selector */
+.ratio-form-group{{display:flex;flex-direction:column;gap:8px}}
+.ratio-label-row{{display:flex;align-items:center;gap:6px;flex-wrap:wrap}}
+.ratio-hint{{font-size:12px;font-weight:500;color:#786f65}}
+.ratio-presets-row{{display:flex;flex-wrap:wrap;gap:8px;align-items:center}}
+.ratio-preset-btn{{border:1px solid #dcd5ca;background:#faf8f5;color:#4a423a;padding:5px 12px;border-radius:18px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;line-height:1.3;transition:all .15s}}
+.ratio-preset-btn:hover{{border-color:#b74227;color:#b74227;background:#fff8f5}}
+.ratio-preset-btn.is-active{{background:#b74227;color:#fff;border-color:#b74227;box-shadow:0 1px 3px rgba(183,66,39,0.25)}}
+.ratio-input-wrap{{position:relative;display:inline-flex;align-items:center;max-width:380px;width:100%}}
+.ratio-input{{padding-right:32px;font-size:13.5px}}
+.ratio-clear-btn{{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#8c8276;font-size:18px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:4px;transition:all .15s}}
+.ratio-clear-btn:hover{{color:#b74227;background:#fff0eb}}
+
+/* Mood Selector */
+.mood-form-group{{display:flex;flex-direction:column;gap:8px}}
+.mood-presets-row{{display:flex;flex-wrap:wrap;gap:7px;align-items:center}}
+.mood-preset-btn{{border:1px solid #dcd5ca;background:#faf8f5;color:#4a423a;padding:4px 11px;border-radius:16px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;line-height:1.3;transition:all .15s}}
+.mood-preset-btn:hover{{border-color:#b74227;color:#b74227;background:#fff8f5}}
+.mood-preset-btn.is-active{{background:#b74227;color:#fff;border-color:#b74227;box-shadow:0 1px 3px rgba(183,66,39,0.25)}}
+
 /* Slots Grid */
 .slots-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}}
-.slot-card{{border:1px solid #ded8cf;border-radius:12px;background:#faf8f5;padding:12px 14px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,box-shadow .15s}}
+.slot-card{{border:1px solid #ded8cf;border-radius:12px;background:#faf8f5;padding:12px 14px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,box-shadow .15s,opacity .15s}}
 .slot-card.has-value{{background:#fff;border-color:#b74227;box-shadow:0 2px 8px rgba(183,66,39,0.08)}}
+.slot-card.is-disabled{{opacity:0.48;background:#f3efe8;border-color:#ded8cf;cursor:not-allowed}}
+.slot-card.is-disabled *{{pointer-events:none}}
+.slot-card.is-disabled .slot-trigger{{background:#ece7df;border-color:#d5cec4;color:#a0968a;cursor:not-allowed}}
+.slot-card.is-disabled .slot-optional{{background:#e2ddd4;color:#8a8075}}
 .slot-header{{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:750;color:#514a43}}
 .slot-title{{display:flex;align-items:center;gap:5px}}
 .slot-optional{{font-size:11px;font-weight:600;color:#8c8276;background:#eee8df;padding:1px 5px;border-radius:3px}}
@@ -258,13 +286,24 @@ dialog::backdrop{{background:#000a}}
       <p class="assembler-sub" data-i18n="assemblerSub">交互式点选图型、风格与色彩，实时拼装出图指令。</p>
     </div>
 
-    <!-- Mode Radiobox -->
+    <!-- Mode & Density Controls -->
     <div class="mode-row">
-      <span class="mode-label" data-i18n="modeLabel">出图模式：</span>
-      <div class="mode-group" role="radiogroup" aria-label="出图模式">
-        <button type="button" class="mode-btn is-active" data-mode="pure" data-i18n="modePure">纯图</button>
-        <button type="button" class="mode-btn" data-mode="graphic-text" data-i18n="modeGraphicText">图文</button>
-        <button type="button" class="mode-btn" data-mode="poster" data-i18n="modePoster">海报</button>
+      <div class="mode-item">
+        <span class="mode-label" data-i18n="modeLabel">出图模式：</span>
+        <div class="mode-group" role="radiogroup" aria-label="出图模式">
+          <button type="button" class="mode-btn is-active" data-mode="pure" data-i18n="modePure">纯图</button>
+          <button type="button" class="mode-btn" data-mode="graphic-text" data-i18n="modeGraphicText">图文</button>
+          <button type="button" class="mode-btn" data-mode="poster" data-i18n="modePoster">海报</button>
+          <button type="button" class="mode-btn" data-mode="article-illust" data-i18n="modeArticleIllust">文章配图</button>
+        </div>
+      </div>
+      <div class="mode-item">
+        <span class="mode-label" data-i18n="whitespaceLabel">留白：</span>
+        <div class="density-group" role="radiogroup" aria-label="留白">
+          <button type="button" class="density-btn is-active" data-whitespace="normal" data-i18n="whitespaceNormal">正常</button>
+          <button type="button" class="density-btn" data-whitespace="moderate" data-i18n="whitespaceModerate" title="【大量留白】">适中</button>
+          <button type="button" class="density-btn" data-whitespace="high" data-i18n="whitespaceHigh" title="【大量留白，场景只显示必要部分，不要显示全】">多</button>
+        </div>
       </div>
     </div>
 
@@ -272,10 +311,63 @@ dialog::backdrop{{background:#000a}}
     <div class="form-section">
       <div class="form-group">
         <label for="input-theme" class="form-label">
-          <span data-i18n="themeLabel">主题：</span>
+          <span id="theme-label-text" data-i18n="themeLabel">主题：</span>
           <span class="req">*</span>
         </label>
         <textarea id="input-theme" class="text-input text-area" rows="2" placeholder="输入画面主题，例如：秋天的第一杯奶茶 / 窗台晒太阳的猫咪..."></textarea>
+      </div>
+
+      <!-- Ratio Selector Form Group -->
+      <div class="form-group ratio-form-group">
+        <div class="ratio-label-row">
+          <label for="input-ratio" class="form-label">
+            <span data-i18n="ratioLabel">画幅比例：</span>
+          </label>
+          <span class="ratio-hint" data-i18n="ratioHint">（默认不设，点击预设快捷填入，支持手动任意修改）</span>
+        </div>
+        <div class="ratio-presets-row" role="group" aria-label="画幅比例快捷预设">
+          <button type="button" class="ratio-preset-btn" data-ratio="3:4" data-i18n="presetXiaohongshu">小红书/公众号贴图 (3:4)</button>
+          <button type="button" class="ratio-preset-btn" data-ratio="2.35:1" data-i18n="presetWechatCover">公众号封面 (2.35:1)</button>
+          <button type="button" class="ratio-preset-btn" data-ratio="16:9" data-i18n="presetXCover">X文章封面 (16:9)</button>
+          <button type="button" class="ratio-preset-btn" data-ratio="4:3" data-i18n="presetArticleImg">文章配图 (4:3)</button>
+          <button type="button" class="ratio-preset-btn" data-ratio="1:1" data-i18n="presetSquare">方块 (1:1)</button>
+          <button type="button" class="ratio-preset-btn" data-ratio="9:16" data-i18n="presetVerticalStory">手机全屏 (9:16)</button>
+        </div>
+        <div class="ratio-input-wrap">
+          <input type="text" id="input-ratio" class="text-input ratio-input" placeholder="输入或点击上方预设，例如：3:4、16:9、1:1（可手填）">
+          <button type="button" id="btn-clear-ratio" class="ratio-clear-btn" title="清空比例" aria-label="清空比例" hidden>×</button>
+        </div>
+      </div>
+
+      <!-- Mood Selector Form Group -->
+      <div class="form-group mood-form-group">
+        <div class="ratio-label-row">
+          <label for="input-mood" class="form-label">
+            <span data-i18n="moodLabel">情绪：</span>
+          </label>
+          <span class="ratio-hint" data-i18n="moodHint">（可选，点击标签多选，支持手动输入）</span>
+        </div>
+        <div class="mood-presets-row" role="group" aria-label="情绪快捷预设">
+          <button type="button" class="mood-preset-btn" data-mood-zh="治愈" data-mood-en="Healing" data-i18n="moodHealing">治愈</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="童趣" data-mood-en="Childlike" data-i18n="moodChildlike">童趣</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="松弛" data-mood-en="Relaxed" data-i18n="moodRelaxed">松弛</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="幽默" data-mood-en="Humorous" data-i18n="moodHumorous">幽默</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="诗意" data-mood-en="Poetic" data-i18n="moodPoetic">诗意</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="浪漫" data-mood-en="Romantic" data-i18n="moodRomantic">浪漫</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="活力" data-mood-en="Vibrant" data-i18n="moodVibrant">活力</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="微丧" data-mood-en="Melancholy" data-i18n="moodMelancholy">微丧</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="孤寂" data-mood-en="Solitary" data-i18n="moodSolitary">孤寂</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="紧张" data-mood-en="Tense" data-i18n="moodTense">紧张</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="庄严" data-mood-en="Solemn" data-i18n="moodSolemn">庄严</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="荒诞" data-mood-en="Absurd" data-i18n="moodAbsurd">荒诞</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="恐怖" data-mood-en="Eerie" data-i18n="moodEerie">恐怖</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="神秘" data-mood-en="Mysterious" data-i18n="moodMysterious">神秘</button>
+          <button type="button" class="mood-preset-btn" data-mood-zh="激烈" data-mood-en="Intense" data-i18n="moodIntense">激烈</button>
+        </div>
+        <div class="ratio-input-wrap">
+          <input type="text" id="input-mood" class="text-input ratio-input" placeholder="输入或点选上方情绪（可多选，例如：治愈、松弛）">
+          <button type="button" id="btn-clear-mood" class="ratio-clear-btn" title="清空情绪" aria-label="清空情绪" hidden>×</button>
+        </div>
       </div>
 
       <!-- Extra fields for poster mode only -->
@@ -297,7 +389,7 @@ dialog::backdrop{{background:#000a}}
       <div class="slot-card" id="slot-layout">
         <div class="slot-header">
           <span class="slot-title">📐 <span data-i18n="slotLayout">图型</span></span>
-          <span class="slot-optional" data-i18n="optional">可选 (120)</span>
+          <span class="slot-optional" id="slot-layout-optional" data-i18n="optionalLayout">可选 (120)</span>
         </div>
         <button type="button" class="slot-trigger" data-picker="layout">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
@@ -320,7 +412,7 @@ dialog::backdrop{{background:#000a}}
       <div class="slot-card" id="slot-style">
         <div class="slot-header">
           <span class="slot-title">🎨 <span data-i18n="slotStyle">风格</span></span>
-          <span class="slot-optional" data-i18n="optional">可选 (278)</span>
+          <span class="slot-optional" data-i18n="optionalStyle">可选 ({styles_count})</span>
         </div>
         <button type="button" class="slot-trigger" data-picker="style">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 10 10 0 0 1 0-18z"/></svg>
@@ -343,7 +435,7 @@ dialog::backdrop{{background:#000a}}
       <div class="slot-card" id="slot-color">
         <div class="slot-header">
           <span class="slot-title">🌈 <span data-i18n="slotColor">主题色</span></span>
-          <span class="slot-optional" data-i18n="optional">可选 (36)</span>
+          <span class="slot-optional" data-i18n="optionalColor">可选 (36)</span>
         </div>
         <button type="button" class="slot-trigger" data-picker="color">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15h18"/></svg>
@@ -421,11 +513,14 @@ const COLORS_DATA = {colors_json_str};
 const COLOR_CATEGORIES = {color_categories_json_str};
 
 const wechatBtn=document.querySelector('#wechat-btn'),wechatModal=document.querySelector('#wechat-modal'),langBtn=document.querySelector('#lang-btn');
-const inputTheme=document.querySelector('#input-theme'),inputAudience=document.querySelector('#input-audience'),inputChannel=document.querySelector('#input-channel'),posterExtraFields=document.querySelector('#poster-extra-fields');
+const inputTheme=document.querySelector('#input-theme'),themeLabelText=document.querySelector('#theme-label-text'),inputAudience=document.querySelector('#input-audience'),inputChannel=document.querySelector('#input-channel'),posterExtraFields=document.querySelector('#poster-extra-fields');
+const inputRatio=document.querySelector('#input-ratio'),btnClearRatio=document.querySelector('#btn-clear-ratio');
+const inputMood=document.querySelector('#input-mood'),btnClearMood=document.querySelector('#btn-clear-mood');
 const assembledText=document.querySelector('#assembled-text'),btnCopyAssembled=document.querySelector('#btn-copy-assembled'),copyBtnText=document.querySelector('#copy-btn-text');
 const pickerDialog=document.querySelector('#picker-dialog'),pickerTitle=document.querySelector('#picker-title'),pickerFilters=document.querySelector('#picker-filters'),pickerSearch=document.querySelector('#picker-search'),pickerGrid=document.querySelector('#picker-grid');
 
-let currentMode = 'pure'; // 'pure' | 'graphic-text' | 'poster'
+let currentMode = 'pure'; // 'pure' | 'graphic-text' | 'poster' | 'article-illust'
+let currentWhitespace = 'normal'; // 'normal' | 'moderate' | 'high'
 let selectedLayout = null;
 let selectedStyle = null;
 let selectedColor = null;
@@ -446,18 +541,58 @@ const I18N = {{
     modePure: "纯图",
     modeGraphicText: "图文",
     modePoster: "海报",
+    modeArticleIllust: "文章配图",
+    whitespaceLabel: "留白：",
+    whitespaceNormal: "正常",
+    whitespaceModerate: "适中",
+    whitespaceHigh: "多",
+    whitespaceModeratePrompt: "【大量留白】",
+    whitespaceHighPrompt: "【大量留白，场景只显示必要部分，不要显示全】",
     themeLabel: "主题：",
+    articlePathLabel: "文章文件地址：",
     audienceLabel: "受众：",
     channelLabel: "海报投放渠道：",
     themePlaceholder: "输入画面主题，例如：秋天的第一杯奶茶 / 窗台晒太阳的猫咪...",
+    articlePathPlaceholder: "请输入文章的本地绝对路径，例如：D:\\\\path\\\\to\\\\article.md...",
     audiencePlaceholder: "例如：年轻都市白领 / 露营爱好者 / 亲子家庭...",
     channelPlaceholder: "例如：小红书 / 微信公众号封面 / 线下门店立牌...",
+    ratioLabel: "画幅比例：",
+    ratioHint: "（默认不设，点击预设快捷填入，支持手动任意修改）",
+    ratioPlaceholder: "输入或点击上方预设，例如：3:4、16:9、1:1（可手填）",
+    presetXiaohongshu: "小红书/公众号贴图 (3:4)",
+    presetWechatCover: "公众号封面 (2.35:1)",
+    presetXCover: "X文章封面 (16:9)",
+    presetArticleImg: "文章配图 (4:3)",
+    presetSquare: "方块 (1:1)",
+    presetVerticalStory: "手机全屏 (9:16)",
+    moodLabel: "情绪：",
+    moodHint: "（可选，点击标签多选，支持手动输入）",
+    moodPlaceholder: "输入或点选上方情绪（可多选，例如：治愈、松弛）",
+    moodHealing: "治愈",
+    moodRelaxed: "松弛",
+    moodHumorous: "幽默",
+    moodPoetic: "诗意",
+    moodRomantic: "浪漫",
+    moodVibrant: "活力",
+    moodMelancholy: "微丧",
+    moodChildlike: "童趣",
+    moodSolitary: "孤寂",
+    moodTense: "紧张",
+    moodSolemn: "庄严",
+    moodAbsurd: "荒诞",
+    moodEerie: "恐怖",
+    moodMysterious: "神秘",
+    moodIntense: "激烈",
     slotLayout: "图型",
     slotStyle: "风格",
     slotColor: "主题色",
     optional: "可选",
+    optionalLayout: "可选 (120)",
+    optionalStyle: f"可选 ({styles_count})",
+    optionalColor: "可选 (36)",
+    layoutNotApplicable: "不适用",
     pickLayoutText: "按图选择图型 (120)",
-    pickStyleText: "按图选择风格 (278)",
+    pickStyleText: f"按图选择风格 ({styles_count})",
     pickColorText: "按图选择主题色 (36)",
     changeBtn: "更换",
     gachaBtn: "智能随机抽卡",
@@ -469,7 +604,7 @@ const I18N = {{
     formulaLabel: "示例提示词：",
     searchPlaceholder: "输入编号或名称过滤...",
     pickerTitleLayout: "选择图型 (120)",
-    pickerTitleStyle: "选择手绘风格 (278)",
+    pickerTitleStyle: f"选择手绘风格 ({styles_count})",
     pickerTitleColor: "选择主题色 (36)",
     filterAll: "全部",
     filterSocialCard: "社媒卡 (SC)",
@@ -483,6 +618,7 @@ const I18N = {{
     filterNeutral: "中性色系",
     fallbackPrompt: "其他你帮我选择",
     themeEmptyText: "【输入主题】",
+    articlePathEmptyText: "【输入文章文件地址】",
     audienceEmptyText: "【输入受众】",
     channelEmptyText: "【输入海报投放渠道】",
     wechatTitle: "💬 创作变现交流群",
@@ -505,18 +641,58 @@ const I18N = {{
     modePure: "Image Only",
     modeGraphicText: "Graphic-Text",
     modePoster: "Poster",
+    modeArticleIllust: "Article Illustration",
+    whitespaceLabel: "Negative Space:",
+    whitespaceNormal: "Normal",
+    whitespaceModerate: "Moderate",
+    whitespaceHigh: "Generous",
+    whitespaceModeratePrompt: "[Generous negative space]",
+    whitespaceHighPrompt: "[Generous negative space, scene shows only essential parts, do not show in full]",
     themeLabel: "Theme:",
+    articlePathLabel: "Article File Path:",
     audienceLabel: "Audience:",
     channelLabel: "Distribution Channel:",
     themePlaceholder: "Enter theme, e.g. Autumn milk tea / Cat sunbathing on windowsill...",
+    articlePathPlaceholder: "Enter absolute local file path, e.g. D:\\\\path\\\\to\\\\article.md...",
     audiencePlaceholder: "e.g. Young urban professionals / Campers / Families...",
     channelPlaceholder: "e.g. Instagram / RED / Store poster stand...",
+    ratioLabel: "Aspect Ratio:",
+    ratioHint: "(Default unset; click preset or type custom ratio)",
+    ratioPlaceholder: "Enter or click preset, e.g. 3:4, 16:9, 1:1 (customizable)",
+    presetXiaohongshu: "RED / WeChat Sticker (3:4)",
+    presetWechatCover: "WeChat Official Cover (2.35:1)",
+    presetXCover: "X Article Cover (16:9)",
+    presetArticleImg: "Article Illustration (4:3)",
+    presetSquare: "Square (1:1)",
+    presetVerticalStory: "Full Screen (9:16)",
+    moodLabel: "Mood:",
+    moodHint: "(Optional, multi-select presets or type custom)",
+    moodPlaceholder: "Type or pick moods (e.g. Healing, Relaxed)",
+    moodHealing: "Healing",
+    moodRelaxed: "Relaxed",
+    moodHumorous: "Humorous",
+    moodPoetic: "Poetic",
+    moodRomantic: "Romantic",
+    moodVibrant: "Vibrant",
+    moodMelancholy: "Melancholy",
+    moodChildlike: "Childlike",
+    moodSolitary: "Solitary",
+    moodTense: "Tense",
+    moodSolemn: "Solemn",
+    moodAbsurd: "Absurd",
+    moodEerie: "Eerie",
+    moodMysterious: "Mysterious",
+    moodIntense: "Intense",
     slotLayout: "Layout",
     slotStyle: "Style",
     slotColor: "Theme Color",
     optional: "Optional",
+    optionalLayout: "Optional (120)",
+    optionalStyle: f"Optional ({styles_count})",
+    optionalColor: "Optional (36)",
+    layoutNotApplicable: "N/A",
     pickLayoutText: "Pick Layout (120)",
-    pickStyleText: "Pick Style (278)",
+    pickStyleText: f"Pick Style ({styles_count})",
     pickColorText: "Pick Theme Color (36)",
     changeBtn: "Change",
     gachaBtn: "Random Gacha",
@@ -528,7 +704,7 @@ const I18N = {{
     formulaLabel: "Example Prompt:",
     searchPlaceholder: "Search ID or name...",
     pickerTitleLayout: "Select Layout (120)",
-    pickerTitleStyle: "Select Style (278)",
+    pickerTitleStyle: f"Select Style ({styles_count})",
     pickerTitleColor: "Select Theme Color (36)",
     filterAll: "All",
     filterSocialCard: "Social Cards (SC)",
@@ -542,6 +718,7 @@ const I18N = {{
     filterNeutral: "Classic Neutral Tones",
     fallbackPrompt: "pick the rest for me",
     themeEmptyText: "[Enter Theme]",
+    articlePathEmptyText: "[Enter Article File Path]",
     audienceEmptyText: "[Enter Audience]",
     channelEmptyText: "[Enter Channel]",
     wechatTitle: "💬 Creator Monetization Community",
@@ -565,10 +742,12 @@ function updatePrompt() {{
     parts.push(isZh ? '请帮我出海报提示词' : 'Please generate a poster prompt for me');
   }} else if (currentMode === 'graphic-text') {{
     parts.push(isZh ? '图文模式' : 'Graphic-text mode');
+  }} else if (currentMode === 'article-illust') {{
+    parts.push(isZh ? '文章配图模式' : 'Article illustration mode');
   }}
 
   // Layout
-  if (selectedLayout) {{
+  if (selectedLayout && currentMode !== 'article-illust') {{
     parts.push(isZh ? `图型：${{selectedLayout.id}}` : `Layout: ${{selectedLayout.id}}`);
   }}
 
@@ -582,16 +761,40 @@ function updatePrompt() {{
     parts.push(isZh ? `主题色：${{selectedColor.id}}` : `Theme color: ${{selectedColor.id}}`);
   }}
 
+  // Aspect ratio (optional, default empty)
+  const ratioVal = inputRatio ? inputRatio.value.trim() : '';
+  if (ratioVal) {{
+    parts.push(isZh ? `画幅比例：${{ratioVal}}` : `Aspect ratio: ${{ratioVal}}`);
+  }}
+
+  // Mood (optional, default empty)
+  const moodVal = inputMood ? inputMood.value.trim() : '';
+  if (moodVal) {{
+    parts.push(isZh ? `情绪：${{moodVal}}` : `Mood: ${{moodVal}}`);
+  }}
+
+  // Whitespace (negative space)
+  if (currentWhitespace === 'moderate') {{
+    parts.push(t.whitespaceModeratePrompt);
+  }} else if (currentWhitespace === 'high') {{
+    parts.push(t.whitespaceHighPrompt);
+  }}
+
   // Fallback: if style OR color is missing, inject "其他你帮我选择"
   const missingStyleOrColor = !selectedStyle || !selectedColor;
   if (missingStyleOrColor) {{
     parts.push(t.fallbackPrompt);
   }}
 
-  // Theme
+  // Theme or Article File Path
   const themeVal = inputTheme.value.trim();
-  const themeDisplay = themeVal || t.themeEmptyText;
-  parts.push(isZh ? `主题：${{themeDisplay}}` : `Theme: ${{themeDisplay}}`);
+  if (currentMode === 'article-illust') {{
+    const articleDisplay = themeVal || t.articlePathEmptyText;
+    parts.push(isZh ? `文章文件地址：${{articleDisplay}}` : `Article file path: ${{articleDisplay}}`);
+  }} else {{
+    const themeDisplay = themeVal || t.themeEmptyText;
+    parts.push(isZh ? `主题：${{themeDisplay}}` : `Theme: ${{themeDisplay}}`);
+  }}
 
   // Extra fields for poster mode
   if (currentMode === 'poster') {{
@@ -650,11 +853,55 @@ function setMode(mode) {{
   }} else {{
     posterExtraFields.hidden = true;
   }}
+
+  const slotLayout = document.querySelector('#slot-layout');
+  const optTag = document.querySelector('#slot-layout-optional');
+  const isIllust = mode === 'article-illust';
+  if (slotLayout) {{
+    slotLayout.classList.toggle('is-disabled', isIllust);
+    const triggerBtn = slotLayout.querySelector('.slot-trigger');
+    if (triggerBtn) triggerBtn.disabled = isIllust;
+    const changeBtn = slotLayout.querySelector('.btn-change');
+    if (changeBtn) changeBtn.disabled = isIllust;
+    const clearBtn = slotLayout.querySelector('.btn-clear');
+    if (clearBtn) clearBtn.disabled = isIllust;
+  }}
+  if (optTag) {{
+    optTag.textContent = isIllust ? I18N[currentLang].layoutNotApplicable : I18N[currentLang].optionalLayout;
+  }}
+  if (isIllust && selectedLayout) {{
+    selectedLayout = null;
+    updateSlotUI('layout');
+  }}
+
+  if (mode === 'article-illust') {{
+    if (inputRatio) {{
+      inputRatio.value = '4:3';
+      if (btnClearRatio) btnClearRatio.hidden = false;
+      document.querySelectorAll('.ratio-preset-btn').forEach(b => {{
+        b.classList.toggle('is-active', b.dataset.ratio === '4:3');
+      }});
+    }}
+    if (themeLabelText) themeLabelText.textContent = I18N[currentLang].articlePathLabel;
+    if (inputTheme) inputTheme.placeholder = I18N[currentLang].articlePathPlaceholder;
+  }} else {{
+    if (themeLabelText) themeLabelText.textContent = I18N[currentLang].themeLabel;
+    if (inputTheme) inputTheme.placeholder = I18N[currentLang].themePlaceholder;
+  }}
+  updatePrompt();
+}}
+
+function setWhitespace(val) {{
+  currentWhitespace = val;
+  document.querySelectorAll('.density-btn').forEach(btn => {{
+    btn.classList.toggle('is-active', btn.dataset.whitespace === val);
+  }});
   updatePrompt();
 }}
 
 // Visual Picker Logic
 function openPicker(type) {{
+  if (type === 'layout' && currentMode === 'article-illust') return;
   currentPickerType = type;
   currentPickerFilter = 'all';
   pickerSearch.value = '';
@@ -692,7 +939,7 @@ function renderStyleFilters() {{
   const t = I18N[currentLang];
   const groups = ['all','A','B','C','D','E','F','G','H'];
   pickerFilters.innerHTML = groups.map(g => {{
-    const label = g === 'all' ? `${{t.filterAll}} (278)` : g;
+    const label = g === 'all' ? `${{t.filterAll}} (${{STYLES_DATA.length}})` : g;
     return `<button type="button" class="modal-filter-btn${{g==='all'?' is-active':''}}" data-filter="${{g}}">${{label}}</button>`;
   }}).join('');
   attachFilterEvents();
@@ -793,12 +1040,14 @@ pickerDialog.addEventListener('click', e => {{ if (e.target === pickerDialog) pi
 document.addEventListener('click', e => {{
   const trigger = e.target.closest('[data-picker]');
   if (trigger) {{
+    if (trigger.dataset.picker === 'layout' && currentMode === 'article-illust') return;
     openPicker(trigger.dataset.picker);
     return;
   }}
   const clearBtn = e.target.closest('[data-clear]');
   if (clearBtn) {{
     const type = clearBtn.dataset.clear;
+    if (type === 'layout' && currentMode === 'article-illust') return;
     if (type === 'layout') selectedLayout = null;
     if (type === 'style') selectedStyle = null;
     if (type === 'color') selectedColor = null;
@@ -811,6 +1060,11 @@ document.addEventListener('click', e => {{
 // Mode radio buttons
 document.querySelectorAll('.mode-btn').forEach(btn => {{
   btn.addEventListener('click', () => setMode(btn.dataset.mode));
+}});
+
+// Whitespace radio buttons
+document.querySelectorAll('.density-btn').forEach(btn => {{
+  btn.addEventListener('click', () => setWhitespace(btn.dataset.whitespace));
 }});
 
 // Inputs change
@@ -830,10 +1084,112 @@ if (inputTheme) {{
   }});
 }}
 
+// Ratio Presets and Input handlers
+document.querySelectorAll('.ratio-preset-btn').forEach(btn => {{
+  btn.addEventListener('click', () => {{
+    const ratio = btn.dataset.ratio;
+    if (btn.classList.contains('is-active')) {{
+      btn.classList.remove('is-active');
+      if (inputRatio) inputRatio.value = '';
+      if (btnClearRatio) btnClearRatio.hidden = true;
+    }} else {{
+      document.querySelectorAll('.ratio-preset-btn').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      if (inputRatio) inputRatio.value = ratio;
+      if (btnClearRatio) btnClearRatio.hidden = false;
+    }}
+    updatePrompt();
+  }});
+}});
+
+if (inputRatio) {{
+  inputRatio.addEventListener('input', () => {{
+    const val = inputRatio.value.trim();
+    if (btnClearRatio) btnClearRatio.hidden = !val;
+    document.querySelectorAll('.ratio-preset-btn').forEach(b => {{
+      b.classList.toggle('is-active', b.dataset.ratio === val);
+    }});
+    updatePrompt();
+  }});
+}}
+
+if (btnClearRatio) {{
+  btnClearRatio.addEventListener('click', () => {{
+    if (inputRatio) {{
+      inputRatio.value = '';
+      inputRatio.focus();
+    }}
+    btnClearRatio.hidden = true;
+    document.querySelectorAll('.ratio-preset-btn').forEach(b => b.classList.remove('is-active'));
+    updatePrompt();
+  }});
+}}
+
+// Mood Presets and Input handlers (multi-select)
+document.querySelectorAll('.mood-preset-btn').forEach(btn => {{
+  btn.addEventListener('click', () => {{
+    const tag = currentLang === 'zh' ? btn.dataset.moodZh : btn.dataset.moodEn;
+    const isZh = currentLang === 'zh';
+    const sep = isZh ? '、' : ', ';
+    const rawVal = inputMood ? inputMood.value.trim() : '';
+    let currentTags = rawVal ? rawVal.split(/[、,，/]+|\\s+/).map(s => s.trim()).filter(Boolean) : [];
+
+    const idx = currentTags.findIndex(t =>
+      t.toLowerCase() === tag.toLowerCase() ||
+      (btn.dataset.moodZh && t === btn.dataset.moodZh) ||
+      (btn.dataset.moodEn && t.toLowerCase() === btn.dataset.moodEn.toLowerCase())
+    );
+
+    if (idx >= 0) {{
+      currentTags.splice(idx, 1);
+      btn.classList.remove('is-active');
+    }} else {{
+      currentTags.push(tag);
+      btn.classList.add('is-active');
+    }}
+
+    if (inputMood) {{
+      inputMood.value = currentTags.join(sep);
+      if (btnClearMood) btnClearMood.hidden = currentTags.length === 0;
+    }}
+    updatePrompt();
+  }});
+}});
+
+if (inputMood) {{
+  inputMood.addEventListener('input', () => {{
+    const rawVal = inputMood.value.trim();
+    if (btnClearMood) btnClearMood.hidden = !rawVal;
+    const tokens = rawVal ? rawVal.split(/[、,，/]+|\\s+/).map(s => s.trim().toLowerCase()).filter(Boolean) : [];
+    const tokenSet = new Set(tokens);
+    document.querySelectorAll('.mood-preset-btn').forEach(b => {{
+      const isMatch = tokenSet.has(b.dataset.moodZh.toLowerCase()) || tokenSet.has(b.dataset.moodEn.toLowerCase());
+      b.classList.toggle('is-active', isMatch);
+    }});
+    updatePrompt();
+  }});
+}}
+
+if (btnClearMood) {{
+  btnClearMood.addEventListener('click', () => {{
+    if (inputMood) {{
+      inputMood.value = '';
+      inputMood.focus();
+    }}
+    btnClearMood.hidden = true;
+    document.querySelectorAll('.mood-preset-btn').forEach(b => b.classList.remove('is-active'));
+    updatePrompt();
+  }});
+}}
+
 // Toolbar Actions: Gacha & Reset
 document.querySelector('#btn-gacha').addEventListener('click', () => {{
-  // Random layout
-  selectedLayout = LAYOUTS_DATA[Math.floor(Math.random() * LAYOUTS_DATA.length)];
+  // Random layout (skip in article-illust mode)
+  if (currentMode !== 'article-illust') {{
+    selectedLayout = LAYOUTS_DATA[Math.floor(Math.random() * LAYOUTS_DATA.length)];
+  }} else {{
+    selectedLayout = null;
+  }}
   // Random style
   selectedStyle = STYLES_DATA[Math.floor(Math.random() * STYLES_DATA.length)];
   // Random color
@@ -853,9 +1209,20 @@ document.querySelector('#btn-reset').addEventListener('click', () => {{
   inputTheme.style.height = '';
   inputAudience.value = '';
   inputChannel.value = '';
+  if (inputRatio) {{
+    inputRatio.value = '';
+    if (btnClearRatio) btnClearRatio.hidden = true;
+    document.querySelectorAll('.ratio-preset-btn').forEach(b => b.classList.remove('is-active'));
+  }}
+  if (inputMood) {{
+    inputMood.value = '';
+    if (btnClearMood) btnClearMood.hidden = true;
+    document.querySelectorAll('.mood-preset-btn').forEach(b => b.classList.remove('is-active'));
+  }}
   updateSlotUI('layout');
   updateSlotUI('style');
   updateSlotUI('color');
+  setWhitespace('normal');
   setMode('pure');
 }});
 
@@ -904,9 +1271,27 @@ function applyLang(lang) {{
     el.textContent = lang === 'zh' ? el.dataset.zh : el.dataset.en;
   }});
 
-  inputTheme.placeholder = t.themePlaceholder;
+  const optTag = document.querySelector('#slot-layout-optional');
+  if (optTag && currentMode === 'article-illust') {{
+    optTag.textContent = t.layoutNotApplicable;
+  }}
+
+  const btnModerate = document.querySelector('.density-btn[data-whitespace="moderate"]');
+  if (btnModerate) btnModerate.title = t.whitespaceModeratePrompt;
+  const btnHigh = document.querySelector('.density-btn[data-whitespace="high"]');
+  if (btnHigh) btnHigh.title = t.whitespaceHighPrompt;
+
+  if (currentMode === 'article-illust') {{
+    if (themeLabelText) themeLabelText.textContent = t.articlePathLabel;
+    if (inputTheme) inputTheme.placeholder = t.articlePathPlaceholder;
+  }} else {{
+    if (themeLabelText) themeLabelText.textContent = t.themeLabel;
+    if (inputTheme) inputTheme.placeholder = t.themePlaceholder;
+  }}
   inputAudience.placeholder = t.audiencePlaceholder;
   inputChannel.placeholder = t.channelPlaceholder;
+  if (inputRatio) inputRatio.placeholder = t.ratioPlaceholder;
+  if (inputMood) inputMood.placeholder = t.moodPlaceholder;
 
   document.querySelectorAll('.copy-btn').forEach(btn => {{
     const box = btn.closest('.formula-box');
