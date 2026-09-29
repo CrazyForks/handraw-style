@@ -898,6 +898,25 @@
     "name_en": "Editorial Isometric Illustrated Map Infographic"
   },
   {
+    "id": "IG-035",
+    "category": "infographic",
+    "name": "微缩箱庭式等距轴测浮岛",
+    "image": "../../../images/layouts/infographics/IG-035.webp",
+    "prompt_file": "layouts/IG-035.md",
+    "keywords": [
+      "等距轴测",
+      "2.5D轴测",
+      "微缩箱庭",
+      "悬浮岛屿",
+      "立体沙盘",
+      "垂直分层",
+      "四周大留白",
+      "模型感",
+      "无UI遮挡"
+    ],
+    "name_en": "Isometric Miniature Diorama & Floating Island Scene"
+  },
+  {
     "id": "SB-001",
     "category": "comic-storyboard",
     "name": "规则网格",
