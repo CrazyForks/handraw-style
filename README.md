@@ -173,7 +173,7 @@ Skill 默认只负责把想法变成提示词；你明确要求“生图”时�
 
 ---
 
-- 💡 **[👉 进入排版图型完整图鉴，浏览全部 122 种排版与提示词 ↗](LAYOUTS.md)**
+- 💡 **[👉 进入排版图型完整图鉴，浏览全部 123 种排版与提示词 ↗](LAYOUTS.md)**
 - 💻 *（本地离线使用：可在本地浏览器打开 `skills/handdraw-style-prompter/gallery/layouts.html` 交互检索与放大）*
 
 ---
@@ -195,7 +195,7 @@ Skill 默认只负责把想法变成提示词；你明确要求“生图”时�
 - 📚 **官方飞书知识库**：[点击访问知识库（速查画廊 / 常见问题速查 / 创业变现案例） ↗](https://ecmn3m3i17.feishu.cn/wiki/space/7689222460876524523?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home)
 - **创作变现交流群 / 作者微信**：请优先加群，满了的话也可以尝试加我个人微信。请备注：**手绘**
 
-| ① 优先加入群聊（手绘3群） | ② 个人微信（备用） |
+| ① 优先加入群聊（手绘4群） | ② 个人微信（备用） |
 | :---: | :---: |
 | <img src="images/wechat_group.png" alt="微信群聊二维码" width="240"> | <img src="images/wechat_personal.png" alt="个人微信二维码" width="240"> |
 

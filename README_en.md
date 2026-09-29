@@ -192,7 +192,7 @@ Ideal for multi-panel narratives, webtoons, emotional storylines, and cinematic 
 
 ---
 
-- 💡 **[👉 Enter Full Layout Visual Sheet to Browse All 122 Layouts & Prompts ↗](LAYOUTS_en.md)**
+- 💡 **[👉 Enter Full Layout Visual Sheet to Browse All 123 Layouts & Prompts ↗](LAYOUTS_en.md)**
 - 💻 *(For offline interactive search and category filtering, open `skills/handdraw-style-prompter/gallery/layouts.html` in your local browser)*
 
 ---
