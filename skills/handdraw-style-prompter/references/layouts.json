@@ -900,21 +900,15 @@
   {
     "id": "IG-035",
     "category": "infographic",
-    "name": "微缩箱庭式等距轴测浮岛",
+    "name": "2.5D等距轴测微缩场景",
     "image": "../../../images/layouts/infographics/IG-035.webp",
     "prompt_file": "layouts/IG-035.md",
     "keywords": [
+      "2.5D",
       "等距轴测",
-      "2.5D轴测",
-      "微缩箱庭",
-      "悬浮岛屿",
-      "立体沙盘",
-      "垂直分层",
-      "四周大留白",
-      "模型感",
-      "无UI遮挡"
+      "微缩场景"
     ],
-    "name_en": "Isometric Miniature Diorama & Floating Island Scene"
+    "name_en": "2.5D Isometric Miniature Scene"
   },
   {
     "id": "SB-001",
